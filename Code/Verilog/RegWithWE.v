@@ -1,5 +1,6 @@
 module RegWithWE #(
-    parameter LENGTH = 32
+    parameter LENGTH = 32,
+    parameter ENABLE_OVERRIDE = 1'b0
 ) (
     input wire                      clk,
     input wire                      resetn,
@@ -7,8 +8,11 @@ module RegWithWE #(
     input wire[`LENGTH - 1 : 0]     i_data,
     input wire                      i_we,
 
-    output reg[`LENGTH - 1 : 0]     o_data
+    output wire[`LENGTH - 1 : 0]    o_data
 );
+    reg[`LENGTH - 1 : 0] data_reg;
+
+    assign o_data = ENABLE_OVERRIDE ? ({`LENGTH{i_ena}} & o_data) : o_data;
 
     always @(posedge clk) begin
         if (!resetn) begin
@@ -16,7 +20,7 @@ module RegWithWE #(
         end
         else begin
             if (i_we) begin
-                o_data <= i_data;
+                data_reg <= i_data;
             end
         end
     end

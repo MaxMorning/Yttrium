@@ -1,3 +1,5 @@
+`include "Include/Exception.v"
+
 //CP0 Reg Addr
 `define CP0_REG_COUNT       5'b01001    // RW
 `define CP0_REG_COMPARE     5'b01011    // RW
@@ -33,7 +35,9 @@ module CP0 (
     output wire[31:0]   o_config_reg,
     output wire[31:0]   o_prid_reg,
 
-    output reg          o_timer_int
+    output reg          o_timer_int,
+
+    ouptut wire         o_answer_exc
 );
 
     reg[31:0] reg_file[31:0];
@@ -50,6 +54,10 @@ module CP0 (
 
     assign o_rdata = i_we && (i_raddr == i_waddr) ? i_wdata : reg_file[i_raddr];
     
+    wire[5:0] masked_int = reg_file[`CP0_REG_STATUS][15:10] & i_int;
+
+    assign o_answer_exc = (~reg_file[`CP0_REG_STATUS][1] && i_except_cause != `EXC_CAUSE_NOP) || (| (masked_int))
+
     integer i;
     always @(posedge clk or negedge resetn) begin
         if (~resetn) begin
@@ -67,7 +75,7 @@ module CP0 (
             reg_file[9] <= 0;
             reg_file[10] <= 0;
             reg_file[11] <= 0;
-            reg_file[`CP0_REG_STATUS] <= 32'h10000000;
+            reg_file[`CP0_REG_STATUS] <= 32'h1000FF00;
             reg_file[13] <= 0;
             reg_file[14] <= 0;
             reg_file[`CP0_REG_PrId] <= 32'h00480101;
@@ -123,12 +131,12 @@ module CP0 (
                 reg_file[`CP0_REG_STATUS][1] <= 1'b0;
             end
             else begin
-                if (i_except_cause == 5'b00000) begin
+                if (i_except_cause == `EXC_CAUSE_INT) begin
                     reg_file[`CP0_REG_EPC] <= i_current_pc - {i_is_in_delay_slot, 2'b00};
                     reg_file[`CP0_REG_CAUSE][31] <= i_is_in_delay_slot;
 
                     reg_file[`CP0_REG_STATUS][1] <= 1'b1;
-                    reg_file[`CP0_REG_CAUSE][6:2] <= 5'b00000;
+                    reg_file[`CP0_REG_CAUSE][6:2] <= `EXC_CAUSE_INT;
                 end
                 else begin
                     if (!reg_file[`CP0_REG_STATUS][1]) begin

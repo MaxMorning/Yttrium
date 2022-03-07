@@ -1,7 +1,7 @@
 // write GPR data selection
 parameter GPR_W_SEL_ALU = 3'h0;
 parameter GPR_W_SEL_MUL = 3'h1;
-parameter GPR_W_SEL_DIV = 3'h2;
+parameter GPR_W_SEL_LLBIT = 3'h2;
 parameter GPR_W_SEL_CP0 = 3'h3;
 parameter GPR_W_SEL_LO = 3'h4;
 parameter GPR_W_SEL_HI = 3'h5;

@@ -26,8 +26,8 @@ module Decoder (
     output reg o_mem_we,
 
     output reg o_is_trap,
-    output reg o_is_branch,
-    output reg o_is_jump,
+    // output reg o_is_branch,
+    // output reg o_is_jump,
     output wire o_is_syscall,
     output wire o_is_eret,
     output wire o_is_div,
@@ -35,7 +35,12 @@ module Decoder (
     output reg[4:0] o_except_cause,
 
     output reg[2:0] o_GPR_w_sel,
-    output reg[1:0] o_LoHi_w_sel
+    output reg[1:0] o_LoHi_w_sel,
+
+    output wire o_CP0_we,
+
+    output wire o_is_LL,
+    output wire o_is_SC
 );
 
     assign o_is_syscall = i_instr[31:26] == OP_SPECIAL && i_instr[5:0] == FUNC_SYSCALL;

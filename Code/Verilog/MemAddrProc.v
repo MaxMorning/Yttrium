@@ -1,6 +1,6 @@
 `include "Include/OP.v"
 
-// this module will be placed in EXE stage
+// this module will be placed in ID stage
 module MemAddrProc (
     input wire  [5:0]   i_instr_op,
     input wire  [15:0]  i_offset,
