@@ -28,6 +28,8 @@ module Core (
     wire[31:0] IF_pc_out;
     wire[31:0] IF_next_pc;
 
+    wire[31:0] IF_current_instr;
+
     // ID
     wire[31:0] ID_branch_jump_dst_pc;
 
@@ -37,11 +39,16 @@ module Core (
     wire ID_get_result_in_EXE;
     wire ID_get_result_in_MEM;
     wire[4:0] ID_GPR_waddr;
+    wire ID_GPR_we;
 
-    wire ID_is_trap;
+    wire[2:0] ID_GPR_wdata_selection;
+
+    wire[31:0] ID_ALU_opr1;
+    wire[31:0] ID_ALU_opr2;
+    wire[4:0] ID_ALU_op;
+
+    // wire ID_is_trap;
     wire ID_is_branch;
-
-    wire ID_pred_is_branch;
 
     wire[31:0] ID_GPR_rdata1;
     wire[31:0] ID_GPR_rdata2;
@@ -52,6 +59,7 @@ module Core (
     wire[31:0] ID_dmem_addr;
     wire[3:0] ID_dmem_sel;
     wire ID_bad_addr;
+    wire ID_dmem_we;
 
     wire ID_current_instr_is_LL;
     wire ID_current_instr_is_SC;
@@ -59,6 +67,21 @@ module Core (
     wire ID_LL_bit_value;
 
     wire ID_data_related_confict;
+
+    wire ID_MultDiv_is_unsigned;
+
+    wire ID_is_div;
+
+    wire ID_RegHi_we;
+    wire ID_RegLo_we;
+
+    wire[1:0] ID_LoHi_wdata_selection;
+
+    wire ID_CP0_we;
+
+    wire ID_is_eret;
+
+    wire[4:0] ID_except_cause;
 
     // EXE
     wire[31:0] EXE_current_instr;
@@ -109,6 +132,8 @@ module Core (
     wire EXE_is_eret;
 
     wire[4:0] EXE_except_cause;
+
+    wire EXE_is_branch;
 
     // MEM
     wire[31:0] MEM_current_pc;
@@ -168,6 +193,7 @@ module Core (
     wire[4:0] WB_GPR_waddr;
     wire[31:0] WB_GPR_wdata;
 
+    assign IF_current_instr = i_IMEM_rdata;
     assign o_DMEM_addr = IF_pc_out;
 
     assign o_timer_int = MEM_CP0_timer_int;
@@ -214,6 +240,20 @@ module Core (
     );
 
     // ID
+
+    IF_ID_reg if_id_reg_inst(
+        .clk(clk),
+        .resetn(resetn),
+
+        .i_ena(IF_ID_ena),
+
+        .i_IF_current_pc(IF_pc_out),
+        .i_IF_current_instr(IF_current_instr),
+
+        .o_ID_current_pc(ID_current_pc),
+        .o_ID_current_instr(ID_current_instr)
+    );
+
     BranchProc branch_proc_inst(
         .i_current_pc(ID_current_pc),
         .i_instr(ID_current_instr),
@@ -280,6 +320,85 @@ module Core (
     );
 
     // EXE
+    ID_EXE_reg id_exe_reg_inst(
+        .clk(clk),
+        .resetn(resetn),
+
+        .i_ena(ID_EXE_ena),
+
+        .i_ID_current_instr(ID_current_instr),
+        .i_ID_current_pc(ID_current_pc),
+
+        .i_ID_get_result_in_EXE(ID_get_result_in_EXE),
+        .i_ID_get_result_in_MEM(ID_get_result_in_MEM),
+        .i_ID_GPR_waddr(ID_GPR_waddr),
+        .i_ID_GPR_we(ID_GPR_we),
+
+        .i_ID_ALU_opr1(ID_ALU_opr1),
+        .i_ID_ALU_opr2(ID_ALU_opr2),
+        .i_ID_ALU_op(ID_ALU_op),
+
+        .i_ID_MultDiv_is_unsigned(i_ID_MultDiv_is_unsigned),
+
+        .i_ID_is_div(ID_is_div),
+        .i_ID_GPR_wdata_selection(ID_GPR_wdata_selection),
+        .i_ID_dmem_addr(ID_dmem_addr),
+        .i_ID_LL_bit_value(ID_LL_bit_value),
+
+        .i_ID_GPR_rdata1(ID_valid_rdata1),
+        .i_ID_RegHi_we(ID_RegHi_we),
+        .i_ID_RegLo_we(ID_RegLo_we),
+
+        .i_ID_LoHi_wdata_selection(ID_LoHi_wdata_selection),
+
+        .i_ID_opr2_value(ID_valid_rdata2),
+
+        .i_ID_CP0_we(ID_CP0_we),
+        .i_ID_is_branch(ID_is_branch),
+        .i_EXE_is_branch(EXE_is_branch),
+        .i_ID_is_eret(ID_is_eret),
+
+        .i_ID_bad_addr(ID_bad_addr),
+        .i_ID_dmem_we(ID_dmem_we)
+        .i_ID_except_cause(ID_except_cause),
+
+        .o_EXE_current_instr(EXE_current_instr),
+        .o_EXE_current_pc(EXE_current_pc),
+
+        .o_EXE_get_result_in_EXE(EXE_get_result_in_EXE),
+        .o_EXE_get_result_in_MEM(EXE_get_result_in_MEM),
+        .o_EXE_GPR_waddr(EXE_GPR_waddr),
+        .o_EXE_GPR_we(EXE_GPR_we),
+
+        .o_EXE_ALU_opr1(EXE_ALU_opr1),
+        .o_EXE_ALU_opr2(EXE_ALU_opr2),
+        .o_EXE_ALU_op(EXE_ALU_op),
+
+        .o_EXE_MultDiv_is_unsigned(EXE_MultDiv_is_unsigned),
+
+        .o_EXE_is_div(EXE_is_div),
+
+        .o_EXE_GPR_wdata_selection(EXE_GPR_wdata_selection),
+
+        .o_EXE_dmem_addr(EXE_dmem_addr),
+        .o_EXE_LL_bit_value(EXE_LL_bit_value),
+
+        .o_EXE_GPR_rdata1(EXE_GPR_rdata1),
+        .o_EXE_RegHi_we(EXE_RegHi_we),
+        .o_EXE_RegLo_we(EXE_RegLo_we),
+
+        .o_EXE_LoHi_wdata_selection(EXE_LoHi_wdata_selection),
+
+        .o_EXE_opr2_value(EXE_opr2_value),
+
+        .o_EXE_CP0_we(EXE_CP0_we),
+        .o_EXE_current_is_in_delay_slot(EXE_current_is_in_delay_slot),
+        .o_EXE_is_branch(EXE_is_branch),
+        .o_EXE_is_eret(EXE_is_eret),
+
+        .o_EXE_except_cause(EXE_except_cause)
+    );
+
     ALU alu_inst(
         .i_opr1(EXE_ALU_opr1),
         .i_opr2(EXE_ALU_opr2),
