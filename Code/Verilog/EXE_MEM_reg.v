@@ -291,7 +291,7 @@ module EXE_MEM_reg (
         .o_data(o_MEM_proc_dmem_rdata)
     );
 
-    RegWithWE #(5) except_cause_reg(
+    RegWithWE #(5, 0, 5'h1f) except_cause_reg(
         .clk(clk),
         .resetn(resetn),
 

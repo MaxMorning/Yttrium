@@ -23,7 +23,7 @@ module PipelineController (
     assign o_EXE_MEM_ena = ~i_MEM_answer_exc & ~div_busy & control_regs[1];
     assign o_MEM_WB_ena = ~div_busy & control_regs[0];
 
-    always @(posedge clk) begin
+    always @(posedge clk or negedge resetn) begin
         if (!resetn) begin
             div_busy <= 0;
         end

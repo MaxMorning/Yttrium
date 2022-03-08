@@ -10,13 +10,13 @@ module BranchProc (
     output reg o_is_branch,
     output reg[31:0] o_next_pc
 );
-    wire[31:0] branch_dst_pc = i_current_pc + {{15{i_instr[15]}}, i_instr[14:0], 2'b00};
+    wire[31:0] branch_dst_pc = i_current_pc + {({{15{i_instr[15]}}, i_instr[14:0]} + 30'h1), 2'b00};
     wire[31:0] imm_jump_dst_pc = {i_current_pc[31:28], i_instr[25:0], 2'b00};
 
     wire[31:0] pc_plus_8 = i_current_pc + 8;
 
     always @(*) begin
-        case (i_current_pc[31:26])
+        case (i_instr[31:26])
             `OP_BEQ:
             begin
                 if (i_GPR_rdata1 == i_GPR_rdata2) begin
@@ -59,7 +59,7 @@ module BranchProc (
 
             `OP_REGIMM:
             begin
-                case (i_current_pc[20:16])
+                case (i_instr[20:16])
                     `RT_BGEZ,
                     `RT_BGEZAL:
                     begin
@@ -120,7 +120,7 @@ module BranchProc (
     end
 
     always @(*) begin
-        case (i_current_pc[31:26])
+        case (i_instr[31:26])
             `OP_BEQ,
             `OP_BNE,
             `OP_BGTZ,

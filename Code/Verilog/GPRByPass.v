@@ -6,10 +6,12 @@ module GPRByPass (
 
     input wire i_EXE_get_result_in_EXE, // when waddr is 0, this will be 1 too
     input wire i_EXE_get_result_in_MEM,
+    input wire i_EXE_we,
     input wire[4:0] i_EXE_waddr,
     input wire[31:0] i_EXE_wdata,
 
     input wire i_MEM_get_result_in_MEM,
+    input wire i_MEM_we,
     input wire[4:0] i_MEM_waddr,
     input wire[31:0] i_MEM_wdata,
 
@@ -19,10 +21,10 @@ module GPRByPass (
 );
     
     always @(*) begin
-        if (i_EXE_get_result_in_EXE && i_EXE_waddr != 0 && i_EXE_waddr == i_ID_raddr1) begin
+        if (i_EXE_we && i_EXE_get_result_in_EXE && i_EXE_waddr != 0 && i_EXE_waddr == i_ID_raddr1) begin
             o_ID_valid_rdata1 <= i_EXE_wdata;
         end
-        else if (i_MEM_get_result_in_MEM && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr1) begin
+        else if (i_MEM_we && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr1) begin
             o_ID_valid_rdata1 <= i_MEM_wdata;
         end
         else begin
@@ -31,10 +33,10 @@ module GPRByPass (
     end
 
     always @(*) begin
-        if (i_EXE_get_result_in_EXE && i_EXE_waddr != 0 && i_EXE_waddr == i_ID_raddr2) begin
+        if (i_EXE_we && i_EXE_get_result_in_EXE && i_EXE_waddr != 0 && i_EXE_waddr == i_ID_raddr2) begin
             o_ID_valid_rdata2 <= i_EXE_wdata;
         end
-        else if (i_MEM_get_result_in_MEM && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr2) begin
+        else if (i_MEM_we && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr2) begin
             o_ID_valid_rdata2 <= i_MEM_wdata;
         end
         else begin
@@ -43,7 +45,7 @@ module GPRByPass (
     end
 
     always @(*) begin
-        if (i_EXE_get_result_in_MEM && i_EXE_waddr != 0 && (i_EXE_waddr == i_ID_raddr1 || i_EXE_waddr == i_ID_raddr2)) begin
+        if (i_EXE_we && i_EXE_get_result_in_MEM && i_EXE_waddr != 0 && (i_EXE_waddr == i_ID_raddr1 || i_EXE_waddr == i_ID_raddr2)) begin
             o_ID_data_related_confict <= 1;
         end
         else begin

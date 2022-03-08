@@ -188,6 +188,26 @@ module ID_EXE_reg (
         .o_data(o_EXE_MultDiv_is_unsigned)
     );
 
+    RegWithWE #(1) is_div_reg(
+        .clk(clk),
+        .resetn(resetn),
+        
+        .i_we(i_ena),
+
+        .i_data(i_ID_is_div),
+        .o_data(o_EXE_is_div)
+    );
+
+    RegWithWE #(3) gpr_wdata_sel_reg(
+        .clk(clk),
+        .resetn(resetn),
+        
+        .i_we(i_ena),
+
+        .i_data(i_ID_GPR_wdata_selection),
+        .o_data(o_EXE_GPR_wdata_selection)
+    );
+
     RegWithWE #(32) dmem_addr_reg(
         .clk(clk),
         .resetn(resetn),
@@ -298,7 +318,7 @@ module ID_EXE_reg (
         .o_data(o_EXE_is_eret)
     );
 
-    RegWithWE #(1, 1) is_eret_reg(
+    RegWithWE #(1, 1) is_trap_reg(
         .clk(clk),
         .resetn(resetn),
         
@@ -308,7 +328,7 @@ module ID_EXE_reg (
         .o_data(o_EXE_is_trap)
     );
 
-    RegWithWE #(5) except_cause_reg(
+    RegWithWE #(5, 0, 5'h1f) except_cause_reg(
         .clk(clk),
         .resetn(resetn),
         

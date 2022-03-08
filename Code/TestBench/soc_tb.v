@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module soc_tb ();
     reg clk;
     reg reset;
@@ -35,11 +37,12 @@ module soc_tb ();
         $readmemh("./MIPS/WORKSPACE/instr.txt", mother_board.imem_inst.inst_array);
         $readmemh("./MIPS/DMEM.txt", mother_board.dmem_inst.data_array);
         fout = $fopen("./MIPS/WORKSPACE/result.txt", "w+");
-        reset = 0;
-        #3
         reset = 1;
+        interruption = 0;
+        #7
+        reset = 0;
 
-        #29;
+        #49;
         for (check_loop = 0; check_loop < 512; check_loop = check_loop + 1) begin
             $fdisplay(fout, "pc: %h", pc);
             $fdisplay(fout, "instr: %h", inst);

@@ -33,7 +33,7 @@ module ALU (
 
     wire[31:0] lui_result = {i_opr2[15:0], 16'h0};
 
-    wire[31:0] movn_result = i_opr2;
+    wire[31:0] movn_result = i_opr1;
 
     wire[31:0] neg_opr1 = ~ i_opr1;
     wire[31:0] clo_result;

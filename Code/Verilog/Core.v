@@ -228,7 +228,7 @@ module Core (
     );
 
     // IF
-    RegWithWE #(32) pc_inst(
+    RegWithWE #(32, 0, 32'h00400000) pc_inst( // initial value == 0040 0000 is to fit mars result
         .clk(clk),
         .resetn(resetn),
 
@@ -340,10 +340,12 @@ module Core (
 
         .i_EXE_get_result_in_EXE(EXE_get_result_in_EXE),
         .i_EXE_get_result_in_MEM(EXE_get_result_in_MEM),
+        .i_EXE_we(EXE_GPR_we & EXE_ALU_no_write_override),
         .i_EXE_waddr(EXE_GPR_waddr),
         .i_EXE_wdata(EXE_GPR_wdata),
 
         .i_MEM_get_result_in_MEM(MEM_get_result_in_MEM),
+        .i_MEM_we(MEM_GPR_we),
         .i_MEM_waddr(MEM_GPR_waddr),
         .i_MEM_wdata(MEM_GPR_wdata),
 

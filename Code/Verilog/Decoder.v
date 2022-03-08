@@ -163,8 +163,8 @@ module Decoder (
                         o_get_result_in_EXE <= 1;
                         o_get_result_in_MEM <= 0;
 
-                        o_ALU_opr1 <= i_rt_rdata;
-                        o_ALU_opr2 <= {27'h0, i_instr[10:6]};
+                        o_ALU_opr1 <= {27'h0, i_instr[10:6]};
+                        o_ALU_opr2 <= i_rt_rdata;
                         o_ALU_op <= `ALU_SLL;
 
                         o_GPR_waddr <= rd_addr;
@@ -211,8 +211,8 @@ module Decoder (
                         o_get_result_in_EXE <= 1;
                         o_get_result_in_MEM <= 0;
 
-                        o_ALU_opr1 <= i_rt_rdata;
-                        o_ALU_opr2 <= {27'h0, i_instr[10:6]};
+                        o_ALU_opr1 <= {27'h0, i_instr[10:6]};
+                        o_ALU_opr2 <= i_rt_rdata;
                         o_ALU_op <= `ALU_SRA;
 
                         o_GPR_waddr <= rd_addr;
@@ -259,8 +259,8 @@ module Decoder (
                         o_get_result_in_EXE <= 1;
                         o_get_result_in_MEM <= 0;
 
-                        o_ALU_opr1 <= i_rt_rdata;
-                        o_ALU_opr2 <= {27'h0, i_instr[10:6]};
+                        o_ALU_opr1 <= {27'h0, i_instr[10:6]};
+                        o_ALU_opr2 <= i_rt_rdata;
                         o_ALU_op <= `ALU_SRL;
 
                         o_GPR_waddr <= rd_addr;
@@ -1269,7 +1269,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_zero_ext;
                 o_ALU_op <= `ALU_AND;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1293,7 +1293,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_zero_ext;
                 o_ALU_op <= `ALU_OR;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1317,7 +1317,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_zero_ext;
                 o_ALU_op <= `ALU_XOR;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1341,7 +1341,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_zero_ext;
                 o_ALU_op <= `ALU_LUI;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1365,7 +1365,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_sign_ext;
                 o_ALU_op <= `ALU_ADD;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1389,7 +1389,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_sign_ext;
                 o_ALU_op <= `ALU_ADDU;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1413,7 +1413,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_sign_ext;
                 o_ALU_op <= `ALU_SLT;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 
@@ -1437,7 +1437,7 @@ module Decoder (
                 o_ALU_opr2 <= type_i_sign_ext;
                 o_ALU_op <= `ALU_SLTU;
 
-                o_GPR_waddr <= rd_addr;
+                o_GPR_waddr <= rt_addr;
                 o_gpr_we <= 1;
                 o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
 

@@ -29,7 +29,7 @@ module Divider (
     assign o_remainder = r_signal ? ~temp_r + 1 : temp_r;
 
     assign o_div_busy = busy;
-    always @(posedge clk) begin
+    always @(posedge clk or negedge resetn) begin
         if (!resetn) begin
             cnt <= 0;
             
