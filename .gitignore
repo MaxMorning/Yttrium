@@ -6,3 +6,6 @@ Code/MIPS/TEMP/
 Code/MIPS/WORKSPACE/
 Code/MIPS/DMEM.txt
 *.vcd
+*.ini
+
+Code/work

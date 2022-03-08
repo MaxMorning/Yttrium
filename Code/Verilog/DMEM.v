@@ -8,8 +8,8 @@ module DMEM (
     output wire[31:0] rdata
 );
     // mimic Block memory behavior
-    reg[31:0] data_array[0:255];
-    wire[31:0] src_rdata = data_array[addr[9:2]];
+    reg[31:0] data_array[0:1023];
+    wire[31:0] src_rdata = data_array[addr[11:2]];
 
     reg[31:0] rdata_reg;
 
@@ -18,19 +18,19 @@ module DMEM (
     always @(posedge clk) begin
         if (we) begin
             if (wdata_sel[3]) begin
-                data_array[addr[9:2]][31:24] <= wdata[31:24];
+                data_array[addr[11:2]][31:24] <= wdata[31:24];
             end
             
             if (wdata_sel[2]) begin
-                data_array[addr[9:2]][23:16] <= wdata[23:16];
+                data_array[addr[11:2]][23:16] <= wdata[23:16];
             end
 
             if (wdata_sel[1]) begin
-                data_array[addr[9:2]][15:8] <= wdata[15:8];
+                data_array[addr[11:2]][15:8] <= wdata[15:8];
             end
 
             if (wdata_sel[0]) begin
-                data_array[addr[9:2]][7:0] <= wdata[7:0];
+                data_array[addr[11:2]][7:0] <= wdata[7:0];
             end
         end
 
