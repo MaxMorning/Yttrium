@@ -8,3 +8,10 @@
 `define EXC_CAUSE_RI    5'h0a
 `define EXC_CAUSE_OV    5'h0c
 `define EXC_CAUSE_TRAP  5'h0d
+
+// Exception process entry
+// `define INT_PROC_ENTRY  32'h00000020
+// `define EXC_PROC_ENTRY  32'h00000040
+// for test bench
+`define INT_PROC_ENTRY  32'h00000008
+`define EXC_PROC_ENTRY  32'h00000008

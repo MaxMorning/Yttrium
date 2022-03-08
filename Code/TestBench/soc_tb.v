@@ -43,7 +43,7 @@ module soc_tb ();
         reset = 0;
 
         #49;
-        for (check_loop = 0; check_loop < 512; check_loop = check_loop + 1) begin
+        for (check_loop = 0; check_loop < 2048; check_loop = check_loop + 1) begin
             $fdisplay(fout, "pc: %h", pc);
             $fdisplay(fout, "instr: %h", inst);
 

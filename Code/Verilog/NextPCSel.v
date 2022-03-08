@@ -19,7 +19,7 @@ module NextPCSel (
         if (i_answer_exc) begin
             case (i_MEM_exception_cause)
                 `EXC_CAUSE_INT:
-                    o_IF_next_pc <= 32'h00000020;
+                    o_IF_next_pc <= `INT_PROC_ENTRY;
 
                 `EXC_CAUSE_ADEL,
                 `EXC_CAUSE_ADES,
@@ -28,7 +28,7 @@ module NextPCSel (
                 `EXC_CAUSE_RI,
                 `EXC_CAUSE_OV,
                 `EXC_CAUSE_TRAP:
-                    o_IF_next_pc <= 32'h00000040;
+                    o_IF_next_pc <= `EXC_PROC_ENTRY;
 
                 default:
                     o_IF_next_pc <= 32'hffffffff; // this should not be executed
