@@ -35,6 +35,8 @@ module EXE_MEM_reg (
     input wire i_EXE_current_is_in_delay_slot,
     input wire i_EXE_is_eret,
 
+    input wire i_EXE_is_trap,
+
     input wire i_EXE_LL_bit_value,
 
     input wire[31:0] i_EXE_proc_dmem_rdata,
@@ -295,7 +297,8 @@ module EXE_MEM_reg (
 
         .i_we(i_ena),
 
-        .i_data(i_EXE_ALU_overflow ? EXC_CAUSE_OV : i_EXE_except_cause),
+        .i_data((i_EXE_is_trap && (i_EXE_ALU_result != 0)) ? `EXC_CAUSE_TRAP : 
+                                                            (i_EXE_ALU_overflow ? `EXC_CAUSE_OV : i_EXE_except_cause)),
         .o_data(o_MEM_CP0_except_cause)
     );
     

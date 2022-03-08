@@ -49,7 +49,7 @@ module Core (
     wire[31:0] ID_ALU_opr2;
     wire[4:0] ID_ALU_op;
 
-    // wire ID_is_trap;
+    wire ID_is_trap;
     wire ID_is_branch;
 
     wire[31:0] ID_GPR_rdata1;
@@ -62,6 +62,7 @@ module Core (
     wire[3:0] ID_dmem_sel;
     wire ID_bad_addr;
     wire ID_dmem_we;
+    wire ID_Decoder_dmem_we;
 
     wire ID_current_instr_is_LL;
     wire ID_current_instr_is_SC;
@@ -132,6 +133,8 @@ module Core (
     wire EXE_current_is_in_delay_slot;
     wire EXE_is_eret;
 
+    wire EXE_is_trap;
+
     wire[4:0] EXE_except_cause;
 
     wire EXE_is_branch;
@@ -196,6 +199,8 @@ module Core (
     wire[4:0] WB_GPR_waddr;
     wire[31:0] WB_GPR_wdata;
 
+
+    assign ID_dmem_we = ID_Decoder_dmem_we & (~ID_current_instr_is_SC | ID_LL_bit_value);
 
     assign o_IMEM_raddr = IF_pc_out;
     assign IF_current_instr = i_IMEM_rdata;
@@ -287,10 +292,12 @@ module Core (
 
         .o_CP0_we(ID_CP0_we),
 
-        .o_mem_we(ID_dmem_we),
+        .o_mem_we(ID_Decoder_dmem_we),
 
         .o_is_eret(ID_is_eret),
         .o_is_div(ID_is_div),
+
+        .o_is_trap(ID_is_trap),
 
         .o_except_cause(ID_except_cause),
 
@@ -404,6 +411,8 @@ module Core (
         .i_EXE_is_branch(EXE_is_branch),
         .i_ID_is_eret(ID_is_eret),
 
+        .i_ID_is_trap(ID_is_trap),
+
         .i_ID_bad_addr(ID_bad_addr),
         .i_ID_dmem_we(ID_dmem_we),
         .i_ID_except_cause(ID_except_cause),
@@ -441,6 +450,8 @@ module Core (
         .o_EXE_current_is_in_delay_slot(EXE_current_is_in_delay_slot),
         .o_EXE_is_branch(EXE_is_branch),
         .o_EXE_is_eret(EXE_is_eret),
+
+        .o_EXE_is_trap(EXE_is_trap),
 
         .o_EXE_except_cause(EXE_except_cause)
     );
@@ -539,6 +550,8 @@ module Core (
         .i_EXE_CP0_we(EXE_CP0_we),
         .i_EXE_current_is_in_delay_slot(EXE_current_is_in_delay_slot),
         .i_EXE_is_eret(EXE_is_eret),
+
+        .i_EXE_is_trap(EXE_is_trap),
 
         .i_EXE_LL_bit_value(EXE_LL_bit_value),
 

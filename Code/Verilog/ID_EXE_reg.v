@@ -40,6 +40,8 @@ module ID_EXE_reg (
     input wire i_EXE_is_branch,
     input wire i_ID_is_eret,
 
+    input wire i_ID_is_trap,
+
     input wire i_ID_bad_addr,
     input wire i_ID_dmem_we,
     input wire[4:0] i_ID_except_cause,
@@ -80,6 +82,8 @@ module ID_EXE_reg (
     output wire o_EXE_current_is_in_delay_slot,
     output wire o_EXE_is_branch,
     output wire o_EXE_is_eret,
+
+    output wire o_EXE_is_trap,
 
     output wire[4:0] o_EXE_except_cause
 );
@@ -292,6 +296,16 @@ module ID_EXE_reg (
 
         .i_data(i_ID_is_eret),
         .o_data(o_EXE_is_eret)
+    );
+
+    RegWithWE #(1, 1) is_eret_reg(
+        .clk(clk),
+        .resetn(resetn),
+        
+        .i_we(i_ena),
+
+        .i_data(i_ID_is_trap),
+        .o_data(o_EXE_is_trap)
     );
 
     RegWithWE #(5) except_cause_reg(

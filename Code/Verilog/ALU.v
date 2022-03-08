@@ -31,7 +31,7 @@ module ALU (
     wire[31:0] srl_result = i_opr2 >> i_opr1;
     wire[31:0] sra_result = i_opr2[31] ? (~(32'hffffffff >> i_opr1) | (i_opr2 >> i_opr1)) : i_opr2 >> i_opr1;
 
-    wire[31:0] lui_result = {i_opr1[15:0], 16'h0};
+    wire[31:0] lui_result = {i_opr2[15:0], 16'h0};
 
     wire[31:0] movn_result = i_opr2;
 
@@ -145,49 +145,49 @@ module ALU (
                 o_no_write_override <= 1;
             end
 
-            `ALU_SLT:
-            // `ALU_LT:
+            `ALU_SLT,
+            `ALU_LT:
             begin
                 o_result <= slt_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            `ALU_SLTU:
-            // `ALU_LTU:
+            `ALU_SLTU,
+            `ALU_LTU:
             begin
                 o_result <= sltu_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            // `ALU_EQUAL:
-            // begin
-            //     o_result <= {31'h0, ~(| xor_result)};
-            //     o_overflow <= 0;
-            //     o_no_write_override <= 1;
-            // end
+            `ALU_EQUAL:
+            begin
+                o_result <= {31'h0, ~(| xor_result)};
+                o_overflow <= 0;
+                o_no_write_override <= 1;
+            end
 
-            // `ALU_GE:
-            // begin
-            //     o_result <= ~slt_result[0];
-            //     o_overflow <= 0;
-            //     o_no_write_override <= 1;
-            // end
+            `ALU_GE:
+            begin
+                o_result <= ~slt_result[0];
+                o_overflow <= 0;
+                o_no_write_override <= 1;
+            end
 
-            // `ALU_GEU:
-            // begin
-            //     o_result <= ~sltu_result[0];
-            //     o_overflow <= 0;
-            //     o_no_write_override <= 1;
-            // end
+            `ALU_GEU:
+            begin
+                o_result <= ~sltu_result[0];
+                o_overflow <= 0;
+                o_no_write_override <= 1;
+            end
 
-            // `ALU_NE:
-            // begin
-            //     o_result <= {31'h0, (| xor_result)};
-            //     o_overflow <= 0;
-            //     o_no_write_override <= 1;
-            // end
+            `ALU_NE:
+            begin
+                o_result <= {31'h0, (| xor_result)};
+                o_overflow <= 0;
+                o_no_write_override <= 1;
+            end
 
             `ALU_CLO:
             begin

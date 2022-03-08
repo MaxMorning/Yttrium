@@ -131,12 +131,12 @@
 `define ALU_SUBU    5'hc
 `define ALU_SLT     5'hd
 `define ALU_SLTU    5'he
-// `define ALU_EQUAL   5'hf
-// `define ALU_GE      5'h10
-// `define ALU_GEU     5'h11
-// `define ALU_LT      5'h12
-// `define ALU_LTU     5'h13
-// `define ALU_NE      5'h14
+`define ALU_EQUAL   5'hf
+`define ALU_GE      5'h10
+`define ALU_GEU     5'h11
+`define ALU_LT      5'h12
+`define ALU_LTU     5'h13
+`define ALU_NE      5'h14
 `define ALU_CLO     5'h15
 `define ALU_CLZ     5'h16
 `define ALU_LUI     5'h17
