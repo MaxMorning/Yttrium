@@ -16,6 +16,6 @@ module MCalc (
     wire[63:0] add_result = {i_reg_hi, i_reg_lo} + {i_mult_hi, i_mult_lo};
     wire[63:0] sub_result = {i_reg_hi, i_reg_lo} - {i_mult_hi, i_mult_lo};
     
-    assign {o_result_hi, o_result_lo} = (i_instr_func == FUNC_MADD || i_instr_func == FUNC_MADDU) ? add_result : sub_result;
+    assign {o_result_hi, o_result_lo} = (i_instr_func == `FUNC_MADD || i_instr_func == `FUNC_MADDU) ? add_result : sub_result;
     
 endmodule

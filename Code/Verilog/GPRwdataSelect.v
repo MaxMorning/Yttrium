@@ -1,3 +1,5 @@
+`include "SelectSignal.v"
+
 module GPRwdataSelect (
     input wire[2:0] i_GPR_wdata_sel,
 

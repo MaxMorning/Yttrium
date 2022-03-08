@@ -9,7 +9,7 @@ work_path = r"../"
 if __name__ == '__main__':
     os.chdir(work_path)
     # compile
-    os.system(r'iverilog -o simulate.sml -y Verilog TestBench/soc_tb.v')
+    os.system(r'iverilog -o simulate.sml -y Verilog -I Verilog/Include TestBench/soc_tb.v')
 
     print("Compile Done!")
     file_names = os.listdir(hex_path)

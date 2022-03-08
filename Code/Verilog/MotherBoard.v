@@ -17,7 +17,7 @@ module MotherBoard (
     wire core_DMEM_we;
     wire[3:0] core_DMEM_sel;
     
-    Core core_0(
+    Core core0(
         .clk(clk),
         .resetn(~reset),
 
@@ -48,7 +48,7 @@ module MotherBoard (
 
         .we(core_DMEM_we),
 
-        .raddr(core_DMEM_addr),
+        .addr(core_DMEM_addr),
         .wdata_sel(core_DMEM_sel),
         .wdata(core_DMEM_wdata),
 

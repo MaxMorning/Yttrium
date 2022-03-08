@@ -37,6 +37,8 @@ module EXE_MEM_reg (
 
     input wire i_EXE_LL_bit_value,
 
+    input wire[31:0] i_EXE_proc_dmem_rdata,
+
     input wire[4:0] i_EXE_except_cause,
     input wire i_EXE_ALU_overflow,
 
@@ -73,14 +75,15 @@ module EXE_MEM_reg (
     output wire o_MEM_current_is_in_delay_slot,
     output wire o_MEM_is_eret,
 
-    output wire o_MEM_LL_bit_value
+    output wire o_MEM_LL_bit_value,
+    output wire[31:0] o_MEM_proc_dmem_rdata
 );
 
     RegWithWE #(32) current_pc_reg(
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_current_pc),
         .o_data(o_MEM_current_pc)
@@ -90,7 +93,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_current_instr),
         .o_data(o_MEM_current_instr)
@@ -100,7 +103,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_get_result_in_MEM),
         .o_data(o_MEM_get_result_in_MEM)
@@ -110,7 +113,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_GPR_we),
         .o_data(o_MEM_GPR_we)
@@ -120,7 +123,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_GPR_waddr),
         .o_data(o_MEM_GPR_waddr)
@@ -130,7 +133,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_GPR_rdata1),
         .o_data(o_MEM_GPR_rdata1)
@@ -140,7 +143,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_ALU_result),
         .o_data(o_MEM_ALU_result)
@@ -150,7 +153,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_Mult_lo),
         .o_data(o_MEM_Mult_lo)
@@ -160,7 +163,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_Mult_hi),
         .o_data(o_MEM_Mult_hi)
@@ -170,7 +173,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_Div_quotient),
         .o_data(o_MEM_Div_quotient)
@@ -180,7 +183,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_Div_remainder),
         .o_data(o_MEM_Div_remainder)
@@ -190,7 +193,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_RegHi_we),
         .o_data(o_MEM_RegHi_we)
@@ -200,7 +203,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_RegLo_we),
         .o_data(o_MEM_RegLo_we)
@@ -210,7 +213,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_LoHi_wdata_selection),
         .o_data(o_MEM_LoHi_wdata_selection)
@@ -220,7 +223,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_opr2_value),
         .o_data(o_MEM_opr2_value)
@@ -230,7 +233,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_GPR_wdata_selection),
         .o_data(o_MEM_GPR_wdata_selection)
@@ -240,7 +243,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_CP0_we),
         .o_data(o_MEM_CP0_we)
@@ -250,7 +253,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_current_is_in_delay_slot),
         .o_data(o_MEM_current_is_in_delay_slot)
@@ -260,7 +263,7 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_is_eret),
         .o_data(o_MEM_is_eret)
@@ -270,17 +273,27 @@ module EXE_MEM_reg (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_LL_bit_value),
         .o_data(o_MEM_LL_bit_value)
+    );
+
+    RegWithWE #(32) proc_dmem_rdata_reg(
+        .clk(clk),
+        .resetn(resetn),
+
+        .i_we(i_ena),
+
+        .i_data(i_EXE_proc_dmem_rdata),
+        .o_data(o_MEM_proc_dmem_rdata)
     );
 
     RegWithWE #(5) except_cause_reg(
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_ALU_overflow ? EXC_CAUSE_OV : i_EXE_except_cause),
         .o_data(o_MEM_CP0_except_cause)

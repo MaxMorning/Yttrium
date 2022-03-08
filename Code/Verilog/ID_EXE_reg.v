@@ -42,7 +42,7 @@ module ID_EXE_reg (
 
     input wire i_ID_bad_addr,
     input wire i_ID_dmem_we,
-    input wire[4:0] i_ID_except_cause
+    input wire[4:0] i_ID_except_cause,
 
 
 
@@ -88,7 +88,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_current_instr),
         .o_data(o_EXE_current_instr)
@@ -98,7 +98,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_current_pc),
         .o_data(o_EXE_current_pc)
@@ -108,7 +108,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_get_result_in_EXE),
         .o_data(o_EXE_get_result_in_EXE)
@@ -118,7 +118,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_get_result_in_MEM),
         .o_data(o_EXE_get_result_in_MEM)
@@ -128,7 +128,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_GPR_waddr),
         .o_data(o_EXE_GPR_waddr)
@@ -138,7 +138,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_GPR_we),
         .o_data(o_EXE_GPR_we)
@@ -148,7 +148,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_ALU_opr1),
         .o_data(o_EXE_ALU_opr1)
@@ -158,7 +158,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_ALU_opr2),
         .o_data(o_EXE_ALU_opr2)
@@ -168,7 +168,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_ALU_op),
         .o_data(o_EXE_ALU_op)
@@ -178,7 +178,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_MultDiv_is_unsigned),
         .o_data(o_EXE_MultDiv_is_unsigned)
@@ -188,7 +188,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_dmem_addr),
         .o_data(o_EXE_dmem_addr)
@@ -198,7 +198,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_LL_bit_value),
         .o_data(o_EXE_LL_bit_value)
@@ -208,7 +208,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_GPR_rdata1),
         .o_data(o_EXE_GPR_rdata1)
@@ -218,7 +218,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_RegHi_we),
         .o_data(o_EXE_RegHi_we)
@@ -228,7 +228,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_RegLo_we),
         .o_data(o_EXE_RegLo_we)
@@ -238,7 +238,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_LoHi_wdata_selection),
         .o_data(o_EXE_LoHi_wdata_selection)
@@ -248,7 +248,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_opr2_value),
         .o_data(o_EXE_opr2_value)
@@ -258,7 +258,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_CP0_we),
         .o_data(o_EXE_CP0_we)
@@ -268,7 +268,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_is_branch),
         .o_data(o_EXE_is_branch)
@@ -278,7 +278,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_EXE_is_branch),
         .o_data(o_EXE_current_is_in_delay_slot)
@@ -288,7 +288,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_is_eret),
         .o_data(o_EXE_is_eret)
@@ -298,7 +298,7 @@ module ID_EXE_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_ID_bad_addr ? (i_ID_dmem_we ? EXC_CAUSE_ADES : EXC_CAUSE_ADEL) : i_ID_except_cause),
         .o_data(o_EXE_except_cause)

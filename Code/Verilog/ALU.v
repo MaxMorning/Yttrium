@@ -54,156 +54,156 @@ module ALU (
 
     always @(*) begin
         case (i_op)
-            ALU_AND:
+            `ALU_AND:
             begin
                 o_result <= and_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_OR:
+            `ALU_OR:
             begin
                 o_result <= or_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_XOR:
+            `ALU_XOR:
             begin
                 o_result <= xor_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_NOR:
+            `ALU_NOR:
             begin
                 o_result <= nor_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_SLL:
+            `ALU_SLL:
             begin
                 o_result <= sll_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_SRA:
+            `ALU_SRA:
             begin
                 o_result <= sra_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_SRL:
+            `ALU_SRL:
             begin
                 o_result <= srl_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_MOVN:
+            `ALU_MOVN:
             begin
                 o_result <= movn_result;
                 o_overflow <= 0;
                 o_no_write_override <= (i_opr2 != 0);
             end
 
-            ALU_MOVZ:
+            `ALU_MOVZ:
             begin
                 o_result <= movn_result;
                 o_overflow <= 0;
                 o_no_write_override <= (i_opr2 == 0);
             end
 
-            ALU_ADD:
+            `ALU_ADD:
             begin
                 o_result <= add_result[31:0];
                 o_overflow <= add_result[32] ^ add_result[31];
                 o_no_write_override <= add_result[32] ~^ add_result[31];
             end
 
-            ALU_ADDU:
+            `ALU_ADDU:
             begin
                 o_result <= addu_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_SUB:
+            `ALU_SUB:
             begin
                 o_result <= sub_result[31:0];
                 o_overflow <= sub_result[32] ^ sub_result[31];
                 o_no_write_override <= sub_result[32] ~^ sub_result[31];
             end
 
-            ALU_SUBU:
+            `ALU_SUBU:
             begin
                 o_result <= subu_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_SLT:
-            ALU_LT:
+            `ALU_SLT:
+            // `ALU_LT:
             begin
                 o_result <= slt_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_SLTU:
-            ALU_LTU:
+            `ALU_SLTU:
+            // `ALU_LTU:
             begin
                 o_result <= sltu_result;
                 o_overflow <= 0;
                 o_no_write_override <= 1;
             end
 
-            ALU_EQUAL:
-            begin
-                o_result <= {31'h0, ~(| xor_result)};
-                o_overflow <= 0;
-                o_no_write_override <= 1;
-            end
+            // `ALU_EQUAL:
+            // begin
+            //     o_result <= {31'h0, ~(| xor_result)};
+            //     o_overflow <= 0;
+            //     o_no_write_override <= 1;
+            // end
 
-            ALU_GE:
-            begin
-                o_result <= ~slt_result[0];
-                o_overflow <= 0;
-                o_no_write_override <= 1;
-            end
+            // `ALU_GE:
+            // begin
+            //     o_result <= ~slt_result[0];
+            //     o_overflow <= 0;
+            //     o_no_write_override <= 1;
+            // end
 
-            ALU_GEU:
-            begin
-                o_result <= ~sltu_result[0];
-                o_overflow <= 0;
-                o_no_write_override <= 1;
-            end
+            // `ALU_GEU:
+            // begin
+            //     o_result <= ~sltu_result[0];
+            //     o_overflow <= 0;
+            //     o_no_write_override <= 1;
+            // end
 
-            ALU_NE:
-            begin
-                o_result <= {31'h0, (| xor_result)};
-                o_overflow <= 0;
-                o_no_write_override <= 1;
-            end
+            // `ALU_NE:
+            // begin
+            //     o_result <= {31'h0, (| xor_result)};
+            //     o_overflow <= 0;
+            //     o_no_write_override <= 1;
+            // end
 
-            ALU_CLO:
+            `ALU_CLO:
             begin
                 o_result <= clo_result;
                 o_no_write_override <= 1;
                 o_overflow <= 0;
             end
 
-            ALU_CLZ:
+            `ALU_CLZ:
             begin
                 o_result <= clz_result;
                 o_no_write_override <= 1;
                 o_overflow <= 0;
             end
 
-            ALU_LUI:
+            `ALU_LUI:
             begin
                 o_result <= lui_result;
                 o_no_write_override <= 1;

@@ -21,12 +21,12 @@ module NextPCSel (
                 `EXC_CAUSE_INT:
                     o_IF_next_pc <= 32'h00000020;
 
-                `EXC_CAUSE_ADEL:
-                `EXC_CAUSE_ADES:
-                `EXC_CAUSE_SYS:
-                `EXC_CAUSE_BP:
-                `EXC_CAUSE_RI:
-                `EXC_CAUSE_OV:
+                `EXC_CAUSE_ADEL,
+                `EXC_CAUSE_ADES,
+                `EXC_CAUSE_SYS,
+                `EXC_CAUSE_BP,
+                `EXC_CAUSE_RI,
+                `EXC_CAUSE_OV,
                 `EXC_CAUSE_TRAP:
                     o_IF_next_pc <= 32'h00000040;
 

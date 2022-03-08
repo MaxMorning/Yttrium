@@ -36,7 +36,7 @@ module Divider (
             busy <= 1'b0;
         end
         else begin
-            if (start) begin
+            if (i_div_start) begin
                 busy <= 1'b1;
                 reg_q <= ~i_is_unsigned & i_dividend[31] ? ~i_dividend + 1 : i_dividend;
                 r_signal <= ~i_is_unsigned & i_dividend[31];

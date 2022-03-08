@@ -60,7 +60,7 @@ module BranchProc (
             `OP_REGIMM:
             begin
                 case (i_current_pc[20:16])
-                    `RT_BGEZ:
+                    `RT_BGEZ,
                     `RT_BGEZAL:
                     begin
                         if (i_GPR_rdata1[31]) begin
@@ -72,7 +72,7 @@ module BranchProc (
                         end
                     end
 
-                    `RT_BLTZ:
+                    `RT_BLTZ,
                     `RT_BLTZAL:
                     begin
                         if (i_GPR_rdata1[31]) begin
@@ -90,7 +90,7 @@ module BranchProc (
                 endcase
             end
 
-            `OP_J:
+            `OP_J,
             `OP_JAL:
             begin
                 o_next_pc <= imm_jump_dst_pc;
@@ -99,7 +99,7 @@ module BranchProc (
             `OP_SPECIAL:
             begin
                 case (i_instr[5:0])
-                    `FUNC_JALR:
+                    `FUNC_JALR,
                     `FUNC_JR:
                     begin
                         o_next_pc <= i_GPR_rdata1;
@@ -121,11 +121,11 @@ module BranchProc (
 
     always @(*) begin
         case (i_current_pc[31:26])
-            `OP_BEQ:
-            `OP_BNE:
-            `OP_BGTZ:
-            `OP_BLEZ:
-            `OP_J:
+            `OP_BEQ,
+            `OP_BNE,
+            `OP_BGTZ,
+            `OP_BLEZ,
+            `OP_J,
             `OP_JAL:
             begin
                 o_is_branch <= 1;
@@ -134,9 +134,9 @@ module BranchProc (
             `OP_REGIMM:
             begin
                 case (i_current_pc[20:16])
-                    `RT_BGEZ:
-                    `RT_BGEZAL:
-                    `RT_BLTZ:
+                    `RT_BGEZ,
+                    `RT_BGEZAL,
+                    `RT_BLTZ,
                     `RT_BLTZAL:
                     begin
                         o_is_branch <= 1;
@@ -152,7 +152,7 @@ module BranchProc (
             `OP_SPECIAL:
             begin
                 case (i_instr[5:0])
-                    `FUNC_JALR:
+                    `FUNC_JALR,
                     `FUNC_JR:
                     begin
                         o_is_branch <= 1;

@@ -14,17 +14,17 @@ module IF_ID_reg (
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_IF_current_instr),
         .o_data(o_ID_current_instr)
     );
 
-    RegWithWE #(32) current_instr_reg(
+    RegWithWE #(32) current_pc_reg(
         .clk(clk),
         .resetn(resetn),
         
-        .i_ena(i_ena),
+        .i_we(i_ena),
 
         .i_data(i_IF_current_pc),
         .o_data(o_ID_current_pc)

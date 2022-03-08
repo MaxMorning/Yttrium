@@ -1,4 +1,4 @@
-module MultCalculator (
+module Mult (
     input wire[31:0] i_opr1,
     input wire[31:0] i_opr2,
 

@@ -37,7 +37,7 @@ module PipelineController (
 
     always @(posedge clk) begin
         if (!resetn) begin
-            control_regs <= 4'h1000;
+            control_regs <= 4'b1000;
         end
         else if (~div_busy) begin
             control_regs[3] <= 1;

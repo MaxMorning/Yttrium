@@ -16,9 +16,9 @@ module MemAddrProc (
 
     always @(*) begin
         case (i_instr_op)
-            `OP_LW:
-            `OP_SW:
-            `OP_LL:
+            `OP_LW,
+            `OP_SW,
+            `OP_LL,
             `OP_SC:
             begin
                 if (target_addr[1:0] != 2'b00) begin
@@ -31,8 +31,8 @@ module MemAddrProc (
                 end
             end
 
-            `OP_LH:
-            `OP_LHU:
+            `OP_LH,
+            `OP_LHU,
             `OP_SH:
             begin
                 if (target_addr[0] != 1'b0) begin
@@ -45,8 +45,8 @@ module MemAddrProc (
                 end
             end
 
-            `OP_LB:
-            `OP_LBU:
+            `OP_LB,
+            `OP_LBU,
             `OP_SB:
             begin
                 o_bad_addr <= 0;
@@ -66,7 +66,7 @@ module MemAddrProc (
                 endcase
             end
 
-            `OP_LWL:
+            `OP_LWL,
             `OP_SWL:
             begin
                 o_bad_addr <= 0;
@@ -86,7 +86,7 @@ module MemAddrProc (
                 endcase
             end
 
-            `OP_LWR:
+            `OP_LWR,
             `OP_SWR:
             begin
                 o_bad_addr <= 0;

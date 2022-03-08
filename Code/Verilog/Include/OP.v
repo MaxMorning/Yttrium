@@ -116,28 +116,28 @@
 `define RS_ERET     5'b10000
 
 // ALU Op
-parameter ALU_AND   = 5'h0;
-parameter ALU_OR    = 5'h1;
-parameter ALU_XOR   = 5'h2;
-parameter ALU_NOR   = 5'h3;
-parameter ALU_SLL   = 5'h4;
-parameter ALU_SRA   = 5'h5;
-parameter ALU_SRL   = 5'h6;
-parameter ALU_MOVN  = 5'h7;
-parameter ALU_MOVZ  = 5'h8;
-parameter ALU_ADD   = 5'h9;
-parameter ALU_ADDU  = 5'ha;
-parameter ALU_SUB   = 5'hb;
-parameter ALU_SUBU  = 5'hc;
-parameter ALU_SLT   = 5'hd;
-parameter ALU_SLTU  = 5'he;
-parameter ALU_EQUAL = 5'hf;
-parameter ALU_GE    = 5'h10;
-parameter ALU_GEU   = 5'h11;
-parameter ALU_LT    = 5'h12;
-parameter ALU_LTU   = 5'h13;
-parameter ALU_NE    = 5'h14;
-parameter ALU_CLO   = 5'h15;
-parameter ALU_CLZ   = 5'h16;
-parameter ALU_LUI   = 5'h17;
-parameter ALU_NOP   = 5'h18;
+`define ALU_AND     5'h0
+`define ALU_OR      5'h1
+`define ALU_XOR     5'h2
+`define ALU_NOR     5'h3
+`define ALU_SLL     5'h4
+`define ALU_SRA     5'h5
+`define ALU_SRL     5'h6
+`define ALU_MOVN    5'h7
+`define ALU_MOVZ    5'h8
+`define ALU_ADD     5'h9
+`define ALU_ADDU    5'ha
+`define ALU_SUB     5'hb
+`define ALU_SUBU    5'hc
+`define ALU_SLT     5'hd
+`define ALU_SLTU    5'he
+// `define ALU_EQUAL   5'hf
+// `define ALU_GE      5'h10
+// `define ALU_GEU     5'h11
+// `define ALU_LT      5'h12
+// `define ALU_LTU     5'h13
+// `define ALU_NE      5'h14
+`define ALU_CLO     5'h15
+`define ALU_CLZ     5'h16
+`define ALU_LUI     5'h17
+`define ALU_NOP     5'h18

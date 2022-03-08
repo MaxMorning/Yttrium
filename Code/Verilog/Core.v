@@ -1,3 +1,5 @@
+`include "SelectSignal.v"
+
 module Core (
     input wire          clk,
     input wire          resetn,
@@ -184,6 +186,8 @@ module Core (
 
     wire MEM_LL_bit_value;
 
+    wire[31:0] MEM_proc_dmem_rdata;
+
     wire MEM_CP0_answer_exc;
 
 
@@ -207,7 +211,7 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_div_busy(EXE_Div_busy)
+        .i_div_busy(EXE_Div_busy),
 
         .i_ID_data_related_confict(ID_data_related_confict),
         .i_MEM_answer_exc(MEM_CP0_answer_exc),
@@ -353,7 +357,7 @@ module Core (
 
     RegWithWE #(1) LL_bit_inst(
         .clk(clk),
-        .resetn(resetn & ~(ID_current_instr_is_SC | /* 响应中断或异常 */)),
+        .resetn(resetn & ~(ID_current_instr_is_SC | MEM_CP0_answer_exc)),
 
         .i_data(1'b1),
         .i_we(ID_current_instr_is_LL),
@@ -401,7 +405,7 @@ module Core (
         .i_ID_is_eret(ID_is_eret),
 
         .i_ID_bad_addr(ID_bad_addr),
-        .i_ID_dmem_we(ID_dmem_we)
+        .i_ID_dmem_we(ID_dmem_we),
         .i_ID_except_cause(ID_except_cause),
 
         .o_EXE_current_instr(EXE_current_instr),
@@ -451,7 +455,7 @@ module Core (
         .o_no_write_override(EXE_ALU_no_write_override)
     );
 
-    MultCalculator mult_inst(
+    Mult mult_inst(
         .i_opr1(EXE_ALU_opr1),
         .i_opr2(EXE_ALU_opr2),
 
@@ -480,7 +484,7 @@ module Core (
 
         .i_alu_result(EXE_ALU_result),
         .i_mul_result(EXE_Mult_lo_result),
-        .i_llbit_result({32'h1, EXE_LL_bit_value}),
+        .i_llbit_result({31'h0, EXE_LL_bit_value}),
         .i_cp0_result(32'hZ),
         .i_lo_reg_result(32'hZ),
         .i_hi_reg_result(32'hZ),
@@ -538,6 +542,8 @@ module Core (
 
         .i_EXE_LL_bit_value(EXE_LL_bit_value),
 
+        .i_EXE_proc_dmem_rdata(EXE_proc_dmem_rdata),
+
         .i_EXE_except_cause(EXE_except_cause),
         .i_EXE_ALU_overflow(EXE_ALU_overflow),
 
@@ -571,7 +577,8 @@ module Core (
         .o_MEM_current_is_in_delay_slot(MEM_current_is_in_delay_slot),
         .o_MEM_is_eret(MEM_is_eret),
 
-        .o_MEM_LL_bit_value(MEM_LL_bit_value)
+        .o_MEM_LL_bit_value(MEM_LL_bit_value),
+        .o_MEM_proc_dmem_rdata(MEM_proc_dmem_rdata)
     );
 
     MCalc m_calc_inst(
@@ -602,13 +609,13 @@ module Core (
     // Hi Reg wdata selection
     always @(*) begin
         case (MEM_LoHi_wdata_selection)
-            LH_W_SEL_GPR:
+            `LH_W_SEL_GPR:
                 MEM_RegHi_wdata <= MEM_GPR_rdata1;
 
-            LH_W_SEL_MCALC:
+            `LH_W_SEL_MCALC:
                 MEM_RegHi_wdata <= MEM_MCalc_hi;
 
-            LH_W_SEL_MUL:
+            `LH_W_SEL_MUL:
                 MEM_RegHi_wdata <= MEM_Mult_hi;
 
             default:  // LH_W_SEL_DIV:
@@ -630,13 +637,13 @@ module Core (
     // Lo Reg wdata selection
     always @(*) begin
         case (MEM_LoHi_wdata_selection)
-            LH_W_SEL_GPR:
+            `LH_W_SEL_GPR:
                 MEM_RegLo_wdata <= MEM_GPR_rdata1;
 
-            LH_W_SEL_MCALC:
+            `LH_W_SEL_MCALC:
                 MEM_RegLo_wdata <= MEM_MCalc_lo;
 
-            LH_W_SEL_MUL:
+            `LH_W_SEL_MUL:
                 MEM_RegLo_wdata <= MEM_Mult_lo;
 
             default:  // LH_W_SEL_DIV:

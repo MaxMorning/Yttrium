@@ -26,7 +26,7 @@ module Decoder (
 
     output reg[1:0] o_LoHi_wdata_selection,
 
-    output reg o_CP0_we,
+    output wire o_CP0_we,
 
     output reg o_mem_we,
     
@@ -38,11 +38,11 @@ module Decoder (
     output wire o_is_LL,
     output wire o_is_SC,
 
-    output wire o_MultDiv_is_unsigned,
+    output wire o_MultDiv_is_unsigned
 );
 
     assign o_is_eret = i_instr[31:26] == `OP_COP0 && i_instr[25:21] == `RS_ERET;
-    assign o_is_div = i_instr[31:26] == `OP_SPECIAL && i_instr[5:1] == `FUNC_DIV[5:1];
+    assign o_is_div = i_instr[31:26] == `OP_SPECIAL && i_instr[5:1] == 5'b01101; // `FUNC_DIV[5:1]
     assign o_CP0_we = i_instr[31:26] == `OP_COP0 && i_instr[25:21] == `RS_MT;
     assign o_is_LL = i_instr[31:26] == `OP_LL;
     assign o_is_SC = i_instr[31:26] == `OP_SC;
@@ -57,10 +57,10 @@ module Decoder (
 
     always @(*) begin
         case (i_instr[31:26])
-            OP_SPECIAL:
+            `OP_SPECIAL:
             begin
                 case (i_instr[5:0]) 
-                    FUNC_AND:
+                    `FUNC_AND:
                     begin
                         o_get_result_in_EXE <= 1;
                         o_get_result_in_MEM <= 0;
@@ -78,14 +78,13 @@ module Decoder (
 
                         o_LoHi_wdata_selection <= 2'bxx;
 
-                        o_CP0_we <= 0;
 
                         o_mem_we <= 0;
 
                         o_except_cause <= `EXC_CAUSE_NOP;
                     end
 
-                    FUNC_OR:
+                    `FUNC_OR:
                     begin
                         o_get_result_in_EXE <= 1;
                         o_get_result_in_MEM <= 0;
@@ -100,22 +99,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_XOR:
+                    `FUNC_XOR:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_XOR;
+                        o_ALU_op <= `ALU_XOR;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -123,22 +115,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_NOR:
+                    `FUNC_NOR:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_NOR;
+                        o_ALU_op <= `ALU_NOR;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -146,22 +131,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SLL:
+                    `FUNC_SLL:
                     begin
                         o_ALU_opr1 <= i_rt_rdata;
                         o_ALU_opr2 <= {27'h0, i_instr[10:6]};
-                        o_ALU_op <= ALU_SLL;
+                        o_ALU_op <= `ALU_SLL;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -169,22 +147,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SLLV:
+                    `FUNC_SLLV:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SLL;
+                        o_ALU_op <= `ALU_SLL;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -192,22 +163,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SRA:
+                    `FUNC_SRA:
                     begin
                         o_ALU_opr1 <= i_rt_rdata;
                         o_ALU_opr2 <= {27'h0, i_instr[10:6]};
-                        o_ALU_op <= ALU_SRA;
+                        o_ALU_op <= `ALU_SRA;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -215,22 +179,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SRAV:
+                    `FUNC_SRAV:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SRA;
+                        o_ALU_op <= `ALU_SRA;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -238,22 +195,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SRL:
+                    `FUNC_SRL:
                     begin
                         o_ALU_opr1 <= i_rt_rdata;
                         o_ALU_opr2 <= {27'h0, i_instr[10:6]};
-                        o_ALU_op <= ALU_SRL;
+                        o_ALU_op <= `ALU_SRL;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -261,22 +211,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SRLV:
+                    `FUNC_SRLV:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SRL;
+                        o_ALU_op <= `ALU_SRL;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -284,22 +227,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_MOVN:
+                    `FUNC_MOVN:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_MOVN;
+                        o_ALU_op <= `ALU_MOVN;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -307,22 +243,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_MOVZ:
+                    `FUNC_MOVZ:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_MOVZ;
+                        o_ALU_op <= `ALU_MOVZ;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -330,22 +259,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_MFHI:
+                    `FUNC_MFHI:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -353,22 +275,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_HI;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_MFLO:
+                    `FUNC_MFLO:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -376,22 +291,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_LO;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_MTHI:
+                    `FUNC_MTHI:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -399,22 +307,15 @@ module Decoder (
                         o_hi_we <= 1;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= LH_W_SEL_GPR;
+                        
                     end
 
-                    FUNC_MTLO:
+                    `FUNC_MTLO:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -422,22 +323,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 1;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= LH_W_SEL_GPR;
+                        
                     end
 
-                    FUNC_ADD:
+                    `FUNC_ADD:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_ADD;
+                        o_ALU_op <= `ALU_ADD;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -445,22 +339,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_ADDU:
+                    `FUNC_ADDU:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_ADDU;
+                        o_ALU_op <= `ALU_ADDU;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -468,22 +355,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SUB:
+                    `FUNC_SUB:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SUB;
+                        o_ALU_op <= `ALU_SUB;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -491,22 +371,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SUBU:
+                    `FUNC_SUBU:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SUBU;
+                        o_ALU_op <= `ALU_SUBU;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -514,22 +387,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SLT:
+                    `FUNC_SLT:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SLT;
+                        o_ALU_op <= `ALU_SLT;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -537,22 +403,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_SLTU:
+                    `FUNC_SLTU:
                     begin
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_SLTU;
+                        o_ALU_op <= `ALU_SLTU;
 
                         o_GPR_waddr <= rd_addr;
                         
@@ -560,22 +419,15 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_MULT:
+                    `FUNC_MULT:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -583,22 +435,15 @@ module Decoder (
                         o_hi_we <= 1;
                         o_lo_we <= 1;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= LH_W_SEL_MUL;
+                        
                     end
 
-                    FUNC_MULTU:
+                    `FUNC_MULTU:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -606,22 +451,15 @@ module Decoder (
                         o_hi_we <= 1;
                         o_lo_we <= 1;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= LH_W_SEL_MUL;
+                        
                     end
 
-                    FUNC_DIV:
+                    `FUNC_DIV:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -629,22 +467,15 @@ module Decoder (
                         o_hi_we <= 1;
                         o_lo_we <= 1;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= LH_W_SEL_DIV;
+                        
                     end
 
-                    FUNC_DIVU:
+                    `FUNC_DIVU:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -652,22 +483,15 @@ module Decoder (
                         o_hi_we <= 1;
                         o_lo_we <= 1;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= LH_W_SEL_DIV;
+                        
                     end
 
-                    FUNC_JR:
+                    `FUNC_JR:
                     begin
                         o_ALU_opr1 <= 32'hX;
                         o_ALU_opr2 <= 32'hX;
-                        o_ALU_op <= ALU_NOP;
+                        o_ALU_op <= `ALU_NOP;
 
                         o_GPR_waddr <= 5'hX;
                         
@@ -675,50 +499,43 @@ module Decoder (
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
-                        o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 1;
-                        o_except_cause <= 5'hX;
-
-                        o_GPR_w_sel <= 3'hX;
-                        o_LoHi_w_sel <= 2'hX;
+                        
                     end
 
-                    FUNC_JALR:
+                    `FUNC_JALR:
                     begin
                     end
 
-                    FUNC_TEQ:
+                    `FUNC_TEQ:
                     begin
                     end
 
-                    FUNC_TGE:
+                    `FUNC_TGE:
                     begin
                     end
 
-                    FUNC_TGEU:
+                    `FUNC_TGEU:
                     begin
                     end
 
-                    FUNC_TLT:
+                    `FUNC_TLT:
                     begin
                     end
 
-                    FUNC_TLTU:
+                    `FUNC_TLTU:
                     begin
                     end
 
-                    FUNC_TNE:
+                    `FUNC_TNE:
                     begin
                     end
 
-                    FUNC_SYSCALL:
+                    `FUNC_SYSCALL:
                     begin
                     end
 
-                    FUNC_SYNC:
+                    `FUNC_SYNC:
                     begin
                     end
 
@@ -728,79 +545,79 @@ module Decoder (
                 endcase
             end
 
-            OP_SPECIAL2:
+            `OP_SPECIAL2:
             begin
                 case (i_instr[5:0]) 
-                    FUNC_CLO:
+                    `FUNC_CLO:
                     begin
                     end
 
-                    FUNC_CLZ:
+                    `FUNC_CLZ:
                     begin
                     end
 
-                    FUNC_MUL:
+                    `FUNC_MUL:
                     begin
                     end
 
-                    FUNC_MADD:
+                    `FUNC_MADD:
                     begin
                     end
 
-                    FUNC_MADDU:
+                    `FUNC_MADDU:
                     begin
                     end
 
-                    FUNC_MSUB:
+                    `FUNC_MSUB:
                     begin
                     end
 
-                    FUNC_MSUBU:
+                    `FUNC_MSUBU:
                     begin
                     end
                 endcase
             end
 
-            OP_REGIMM:
+            `OP_REGIMM:
             begin
                 case (i_instr[20:16]) 
-                    RT_BGEZAL: // BAL
+                    `RT_BGEZAL: // BAL
                     begin
                     end
 
-                    RT_BGEZ:
+                    `RT_BGEZ:
                     begin
                     end
 
-                    RT_BLTZ:
+                    `RT_BLTZ:
                     begin
                     end
 
-                    RT_BLTZAL:
+                    `RT_BLTZAL:
                     begin
                     end    
 
-                    RT_TEQI:
+                    `RT_TEQI:
                     begin
                     end
 
-                    RT_TGEI:
+                    `RT_TGEI:
                     begin
                     end
 
-                    RT_TGEIU:
+                    `RT_TGEIU:
                     begin
                     end
 
-                    RT_TLTI:
+                    `RT_TLTI:
                     begin
                     end
 
-                    RT_TLTIU:
+                    `RT_TLTIU:
                     begin
                     end
 
-                    RT_TNEI:
+                    `RT_TNEI:
                     begin
                     end
 
@@ -809,132 +626,132 @@ module Decoder (
 
 
             // I-type instr
-            OP_ANDI:
+            `OP_ANDI:
             begin
             end
 
-            OP_ORI:
+            `OP_ORI:
             begin
             end
 
-            OP_XORI:
+            `OP_XORI:
             begin
             end
 
-            OP_LUI:
+            `OP_LUI:
             begin
             end
 
-            OP_ADDI:
+            `OP_ADDI:
             begin
             end
 
-            OP_ADDIU:
+            `OP_ADDIU:
             begin
             end
 
-            OP_SLTI:
+            `OP_SLTI:
             begin
             end
 
-            OP_SLTIU:
+            `OP_SLTIU:
             begin
             end
 
-            OP_J:
+            `OP_J:
             begin
             end
 
-            OP_JAL:
+            `OP_JAL:
             begin
             end
 
-            OP_BEQ: // B
+            `OP_BEQ: // B
             begin
             end
 
-            OP_BGTZ:
+            `OP_BGTZ:
             begin
             end
 
-            OP_BLEZ:
+            `OP_BLEZ:
             begin
             end
 
-            OP_BNE:
+            `OP_BNE:
             begin
             end
 
-            OP_LB:
+            `OP_LB:
             begin
             end
 
-            OP_LBU:
+            `OP_LBU:
             begin
             end
 
-            OP_LH:
+            `OP_LH:
             begin
             end
 
-            OP_LHU:
+            `OP_LHU:
             begin
             end
 
-            OP_LL:
+            `OP_LL:
             begin
             end
 
-            OP_LW:
+            `OP_LW:
             begin
             end
 
-            OP_LWL:
+            `OP_LWL:
             begin
             end
 
-            OP_LWR:
+            `OP_LWR:
             begin
             end
 
-            OP_SB:
+            `OP_SB:
             begin
             end
 
-            OP_SC:
+            `OP_SC:
             begin
             end
 
-            OP_SH:
+            `OP_SH:
             begin
             end
 
-            OP_SW:
+            `OP_SW:
             begin
             end
 
-            OP_SWL:
+            `OP_SWL:
             begin
             end
 
-            OP_SWR:
+            `OP_SWR:
             begin
             end
 
-            OP_COP0:
+            `OP_COP0:
             begin
                 case (i_instr[25:21])
-                    RS_MF:
+                    `RS_MF:
                     begin
                         
                     end
 
-                    RS_MT:
+                    `RS_MT:
                     begin
                         
                     end
 
-                    RS_ERET:
+                    `RS_ERET:
                     begin
 
                     end
@@ -942,7 +759,7 @@ module Decoder (
                 endcase
             end
 
-            OP_PREF:
+            `OP_PREF:
             begin
             end
 

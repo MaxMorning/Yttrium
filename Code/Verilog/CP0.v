@@ -37,7 +37,7 @@ module CP0 (
 
     output reg          o_timer_int,
 
-    ouptut wire         o_answer_exc
+    output wire         o_answer_exc
 );
 
     reg[31:0] reg_file[31:0];
@@ -56,9 +56,8 @@ module CP0 (
     
     wire[5:0] masked_int = reg_file[`CP0_REG_STATUS][15:10] & i_int;
 
-    assign o_answer_exc = (~reg_file[`CP0_REG_STATUS][1] && i_except_cause != `EXC_CAUSE_NOP) || (| (masked_int))
+    assign o_answer_exc = (~reg_file[`CP0_REG_STATUS][1] && i_except_cause != `EXC_CAUSE_NOP) || (| (masked_int));
 
-    integer i;
     always @(posedge clk or negedge resetn) begin
         if (~resetn) begin
             o_timer_int <= 1'b0;
@@ -115,7 +114,7 @@ module CP0 (
                         reg_file[`CP0_REG_CAUSE][23:22] <= i_wdata[23:22];
                     end
 
-                    `CP0_REG_PrId:
+                    `CP0_REG_PrId,
                     `CP0_REG_CONFIG:
                     begin
                     end
