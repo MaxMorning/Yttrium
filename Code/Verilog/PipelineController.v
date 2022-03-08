@@ -3,7 +3,6 @@ module PipelineController (
     input wire resetn,
 
     input wire i_div_busy,
-    input wire i_div_done,
 
     input wire i_ID_data_related_confict,
     input wire i_MEM_answer_exc,
@@ -28,7 +27,7 @@ module PipelineController (
         if (!resetn) begin
             div_busy <= 0;
         end
-        else if (div_busy && i_div_done) begin
+        else if (div_busy && ~i_div_busy) begin
             div_busy <= 0;
         end
         else if (~div_busy && i_div_busy) begin

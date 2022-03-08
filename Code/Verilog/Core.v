@@ -2,7 +2,7 @@ module Core (
     input wire          clk,
     input wire          resetn,
 
-    input wire[5:0]     i_interuption,
+    input wire[5:0]     i_interruption,
 
     input wire[31:0]    i_IMEM_rdata,
     output wire[31:0]   o_IMEM_raddr,
@@ -110,7 +110,6 @@ module Core (
     wire[31:0] EXE_Div_quotient;
     wire[31:0] EXE_Div_remainder;
     wire EXE_Div_busy;
-    wire EXE_Div_done;
 
     wire[2:0] EXE_GPR_wdata_selection;
     wire[31:0] EXE_GPR_wdata;
@@ -193,8 +192,14 @@ module Core (
     wire[4:0] WB_GPR_waddr;
     wire[31:0] WB_GPR_wdata;
 
+
+    assign o_IMEM_raddr = IF_pc_out;
     assign IF_current_instr = i_IMEM_rdata;
-    assign o_DMEM_addr = IF_pc_out;
+    assign o_DMEM_addr = ID_dmem_addr;
+    assign o_DMEM_we = ID_dmem_we;
+    assign o_DMEM_wdata = ID_valid_rdata2;
+    assign o_DMEM_sel = ID_dmem_sel;
+    
 
     assign o_timer_int = MEM_CP0_timer_int;
 
@@ -202,8 +207,7 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_div_busy(EXE_Div_busy),
-        .i_div_done(EXE_Div_done),
+        .i_div_busy(EXE_Div_busy)
 
         .i_ID_data_related_confict(ID_data_related_confict),
         .i_MEM_answer_exc(MEM_CP0_answer_exc),
@@ -252,6 +256,44 @@ module Core (
 
         .o_ID_current_pc(ID_current_pc),
         .o_ID_current_instr(ID_current_instr)
+    );
+
+    Decoder decoder_inst(
+        .i_instr(ID_current_instr),
+        .i_rs_rdata(ID_valid_rdata1),
+        .i_rt_rdata(ID_valid_rdata2),
+
+        .i_pc(ID_current_pc),
+
+        .o_get_result_in_EXE(ID_get_result_in_EXE),
+        .o_get_result_in_MEM(ID_get_result_in_MEM),
+
+        .o_ALU_opr1(ID_ALU_opr1),
+        .o_ALU_opr2(ID_ALU_opr2),
+        .o_ALU_op(ID_ALU_op),
+
+        .o_GPR_waddr(ID_GPR_waddr),
+        .o_gpr_we(ID_GPR_we),
+        .o_GPR_wdata_selection(ID_GPR_wdata_selection),
+        
+        .o_hi_we(ID_RegHi_we),
+        .o_lo_we(ID_RegLo_we),
+
+        .o_LoHi_wdata_selection(ID_LoHi_wdata_selection),
+
+        .o_CP0_we(ID_CP0_we),
+
+        .o_mem_we(ID_dmem_we),
+
+        .o_is_eret(ID_is_eret),
+        .o_is_div(ID_is_div),
+
+        .o_except_cause(ID_except_cause),
+
+        .o_is_LL(ID_current_instr_is_LL),
+        .o_is_SC(ID_current_instr_is_SC),
+
+        .o_MultDiv_is_unsigned(ID_MultDiv_is_unsigned)
     );
 
     BranchProc branch_proc_inst(
@@ -419,7 +461,7 @@ module Core (
         .o_lo_result(EXE_Mult_lo_result)
     );
 
-    Divivder div_inst(
+    Divider div_inst(
         .clk(clk),
         .resetn(resetn),
 
@@ -430,8 +472,7 @@ module Core (
 
         .o_quotient(EXE_Div_quotient),
         .o_remainder(EXE_Div_remainder),
-        .o_div_busy(EXE_Div_busy),
-        .o_div_done(EXE_Div_done)
+        .o_div_busy(EXE_Div_busy)
     );
 
     GPRwdataSelect EXE_gpr_wdata_select_inst(
@@ -613,7 +654,7 @@ module Core (
         .i_raddr(MEM_current_instr[15:11]),
 
         .i_except_cause(MEM_CP0_except_cause),
-        .i_int(i_interuption),
+        .i_int(i_interruption),
         .i_current_pc(MEM_current_pc),
         .i_is_in_delay_slot(MEM_current_is_in_delay_slot),
         .i_is_eret(MEM_is_eret),

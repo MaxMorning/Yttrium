@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 `include "Include/OP.v"
 `include "Include/SelectSignal.v"
+`include "Include/Exception.v"
 
 module Decoder (
     input wire[31:0] i_instr,
@@ -18,35 +19,35 @@ module Decoder (
 
     output reg[4:0] o_GPR_waddr,
     output reg o_gpr_we,
+    output reg[2:0] o_GPR_wdata_selection,
+    
     output reg o_hi_we,
     output reg o_lo_we,
+
+    output reg[1:0] o_LoHi_wdata_selection,
 
     output reg o_CP0_we,
 
     output reg o_mem_we,
-
-    output reg o_is_trap,
-    // output reg o_is_branch,
-    // output reg o_is_jump,
-    output wire o_is_syscall,
+    
     output wire o_is_eret,
     output wire o_is_div,
-    output wire o_is_mult_first, // MADD / MADDU / MSUB / MSUBU
+
     output reg[4:0] o_except_cause,
 
-    output reg[2:0] o_GPR_w_sel,
-    output reg[1:0] o_LoHi_w_sel,
-
-    output wire o_CP0_we,
-
     output wire o_is_LL,
-    output wire o_is_SC
+    output wire o_is_SC,
+
+    output wire o_MultDiv_is_unsigned,
 );
 
-    assign o_is_syscall = i_instr[31:26] == OP_SPECIAL && i_instr[5:0] == FUNC_SYSCALL;
-    assign o_is_eret = i_instr[31:26] == OP_COP0 && i_instr[25:21] == RS_ERET;
-    assign o_is_div = i_instr[31:26] == OP_SPECIAL && i_instr[5:1] == FUNC_DIV[5:1];
-    assign o_is_mult_first = i_instr[31:26] == OP_SPECIAL2 && i_instr[5:3] == 3'b000 && i_instr[1] == 1'b1;
+    assign o_is_eret = i_instr[31:26] == `OP_COP0 && i_instr[25:21] == `RS_ERET;
+    assign o_is_div = i_instr[31:26] == `OP_SPECIAL && i_instr[5:1] == `FUNC_DIV[5:1];
+    assign o_CP0_we = i_instr[31:26] == `OP_COP0 && i_instr[25:21] == `RS_MT;
+    assign o_is_LL = i_instr[31:26] == `OP_LL;
+    assign o_is_SC = i_instr[31:26] == `OP_SC;
+
+    assign o_MultDiv_is_unsigned = i_instr[31:26] == `OP_SPECIAL && (i_instr[5:0] == `FUNC_MULTU || i_instr[5:0] == `FUNC_DIVU);
 
     wire[31:0] type_i_zero_ext = {16'h0, i_instr[15:0]};
     wire[31:0] type_i_sign_ext = {{17{i_instr[15]}}, i_instr[14:0]};
@@ -61,32 +62,37 @@ module Decoder (
                 case (i_instr[5:0]) 
                     FUNC_AND:
                     begin
+                        o_get_result_in_EXE <= 1;
+                        o_get_result_in_MEM <= 0;
+
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_AND;
+                        o_ALU_op <= `ALU_AND;
 
                         o_GPR_waddr <= rd_addr;
-
                         o_gpr_we <= 1;
+                        o_GPR_wdata_selection <= `GPR_W_SEL_ALU;
+
                         o_hi_we <= 0;
                         o_lo_we <= 0;
 
+                        o_LoHi_wdata_selection <= 2'bxx;
+
                         o_CP0_we <= 0;
 
-                        o_is_trap <= 0;
-                        o_is_branch <= 0;
-                        o_is_jump <= 0;
-                        o_except_cause <= 5'hX;
+                        o_mem_we <= 0;
 
-                        o_GPR_w_sel <= GPR_W_SEL_ALU;
-                        o_LoHi_w_sel <= 2'hX;
+                        o_except_cause <= `EXC_CAUSE_NOP;
                     end
 
                     FUNC_OR:
                     begin
+                        o_get_result_in_EXE <= 1;
+                        o_get_result_in_MEM <= 0;
+                        
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
-                        o_ALU_op <= ALU_OR;
+                        o_ALU_op <= `ALU_OR;
 
                         o_GPR_waddr <= rd_addr;
                         
