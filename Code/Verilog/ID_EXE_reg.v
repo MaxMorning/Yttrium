@@ -1,4 +1,4 @@
-`include "Include/Exception.v"
+`include "Exception.v"
 
 module ID_EXE_reg (
     input wire clk,

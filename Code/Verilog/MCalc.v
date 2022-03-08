@@ -1,4 +1,4 @@
-`include "Include/OP.v"
+`include "OP.v"
 
 module MCalc (
     input wire[5:0] i_instr_func,

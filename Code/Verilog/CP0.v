@@ -1,4 +1,4 @@
-`include "Include/Exception.v"
+`include "Exception.v"
 
 //CP0 Reg Addr
 `define CP0_REG_COUNT       5'b01001    // RW

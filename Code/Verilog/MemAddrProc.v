@@ -1,4 +1,4 @@
-`include "Include/OP.v"
+`include "OP.v"
 
 // this module will be placed in ID stage
 module MemAddrProc (

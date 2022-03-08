@@ -1,4 +1,4 @@
-`include "Include/OP.v"
+`include "OP.v"
 
 module BranchProc (
     input wire[31:0] i_current_pc,

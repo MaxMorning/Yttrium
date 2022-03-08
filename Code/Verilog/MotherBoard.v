@@ -2,7 +2,7 @@ module MotherBoard (
     input wire clk,
     input wire reset, // positive active reset signal
     
-    input wire[4:0] i_interruption,
+    input wire[4:0] i_interruption
 
 );
     

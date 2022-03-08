@@ -1,4 +1,4 @@
-`include "Include/Exception.v"
+`include "Exception.v"
 
 module EXE_MEM_reg (
     input wire clk,

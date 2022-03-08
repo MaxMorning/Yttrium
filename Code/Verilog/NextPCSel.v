@@ -1,4 +1,4 @@
-`include "Include/Exception.v"
+`include "Exception.v"
 
 module NextPCSel (
     input wire[31:0] i_IF_current_pc,

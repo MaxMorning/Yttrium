@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
-`include "Include/OP.v"
-`include "Include/SelectSignal.v"
-`include "Include/Exception.v"
+`include "OP.v"
+`include "SelectSignal.v"
+`include "Exception.v"
 
 module Decoder (
     input wire[31:0] i_instr,
@@ -89,7 +89,7 @@ module Decoder (
                     begin
                         o_get_result_in_EXE <= 1;
                         o_get_result_in_MEM <= 0;
-                        
+
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
                         o_ALU_op <= `ALU_OR;
