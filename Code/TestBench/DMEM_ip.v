@@ -10,11 +10,33 @@ module DMEM (
 
     wire[3:0] wea = {4{we}} & wdata_sel;
 
+    reg[31:0] ANSCODE_reg;
+
     blk_mem your_instance_name (
         .clka(clk),    // input wire clka
         .wea(wea),      // input wire [3 : 0] wea
-        .addra(addr),  // input wire [16 : 0] addra
+        .addra(addr[31:2]),  // input wire [16 : 0] addra
         .dina(wdata),    // input wire [31 : 0] dina
         .douta(rdata)  // output wire [31 : 0] douta
     );
+
+    always @(posedge clk) begin
+        if (we && addr[31:2] == 30'h04004000) begin
+            if (wdata_sel[3]) begin
+                ANSCODE_reg[31:24] <= wdata[31:24];
+            end
+            
+            if (wdata_sel[2]) begin
+                ANSCODE_reg[23:16] <= wdata[23:16];
+            end
+
+            if (wdata_sel[1]) begin
+                ANSCODE_reg[15:8] <= wdata[15:8];
+            end
+
+            if (wdata_sel[0]) begin
+                ANSCODE_reg[7:0] <= wdata[7:0];
+            end
+        end
+    end
 endmodule

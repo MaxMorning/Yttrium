@@ -371,7 +371,7 @@ module Core (
 
     RegWithWE #(1) LL_bit_inst(
         .clk(clk),
-        .resetn(resetn & ~(ID_current_instr_is_SC | MEM_CP0_answer_exc)),
+        .resetn(resetn & ~(MEM_CP0_answer_exc)),
 
         .i_data(ID_current_instr_is_LL),
         .i_we(ID_current_instr_is_LL | ID_current_instr_is_SC),
