@@ -49,7 +49,9 @@ module Decoder (
     assign o_is_LL = i_instr[31:26] == `OP_LL;
     assign o_is_SC = i_instr[31:26] == `OP_SC;
 
-    assign o_MultDiv_is_unsigned = i_instr[31:26] == `OP_SPECIAL && (i_instr[5:0] == `FUNC_MULTU || i_instr[5:0] == `FUNC_DIVU);
+    wire mult_div_is_unsigned = i_instr[31:26] == `OP_SPECIAL && (i_instr[5:0] == `FUNC_MULTU || i_instr[5:0] == `FUNC_DIVU);
+    wire madd_msub_is_unsigned = i_instr[31:26] == `OP_SPECIAL2 && (i_instr[5:0] == `FUNC_MADDU || i_instr[5:0] == `FUNC_MSUBU);
+    assign o_MultDiv_is_unsigned = mult_div_is_unsigned | madd_msub_is_unsigned;
 
     wire[31:0] type_i_zero_ext = {16'h0, i_instr[15:0]};
     wire[31:0] type_i_sign_ext = {{17{i_instr[15]}}, i_instr[14:0]};
@@ -960,8 +962,8 @@ module Decoder (
 
                     `FUNC_MUL:
                     begin
-                        o_get_result_in_EXE <= 1;
-                        o_get_result_in_MEM <= 0;
+                        o_get_result_in_EXE <= 0;
+                        o_get_result_in_MEM <= 1;
 
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;
@@ -1540,7 +1542,7 @@ module Decoder (
                 o_get_result_in_MEM <= 0;
 
                 o_ALU_opr1 <= 32'hX;
-                o_ALU_opr2 <= 32'hX;
+                o_ALU_opr2 <= i_rt_rdata;
                 o_ALU_op <= `ALU_NOP;
 
                 o_GPR_waddr <= rt_addr;
@@ -1559,7 +1561,6 @@ module Decoder (
             end
 
             `OP_SB,
-            `OP_SC,
             `OP_SH,
             `OP_SW,
             `OP_SWL,
@@ -1575,6 +1576,30 @@ module Decoder (
                 o_GPR_waddr <= 5'hX;
                 o_gpr_we <= 0;
                 o_GPR_wdata_selection <= 3'hX;
+
+                o_hi_we <= 0;
+                o_lo_we <= 0;
+
+                o_LoHi_wdata_selection <= 2'bxx;
+
+                o_mem_we <= 1;
+
+                o_is_trap <= 0;
+                o_except_cause <= `EXC_CAUSE_NOP;
+            end
+
+            `OP_SC:
+            begin
+                o_get_result_in_EXE <= 1;
+                o_get_result_in_MEM <= 0;
+
+                o_ALU_opr1 <= 32'hX;
+                o_ALU_opr2 <= 32'hX;
+                o_ALU_op <= `ALU_NOP;
+
+                o_GPR_waddr <= rt_addr;
+                o_gpr_we <= 1;
+                o_GPR_wdata_selection <= `GPR_W_SEL_LLBIT;
 
                 o_hi_we <= 0;
                 o_lo_we <= 0;

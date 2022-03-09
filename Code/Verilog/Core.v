@@ -1,4 +1,6 @@
 `include "SelectSignal.v"
+`include "OP.v"
+`include "Exception.v"
 
 module Core (
     input wire          clk,
@@ -58,6 +60,7 @@ module Core (
     wire[31:0] ID_valid_rdata1;
     wire[31:0] ID_valid_rdata2;
 
+    wire[31:0] ID_dmem_wdata;
     wire[31:0] ID_dmem_addr;
     wire[3:0] ID_dmem_sel;
     wire ID_bad_addr;
@@ -204,9 +207,9 @@ module Core (
 
     assign o_IMEM_raddr = IF_pc_out;
     assign IF_current_instr = i_IMEM_rdata;
-    assign o_DMEM_addr = ID_dmem_addr;
+    assign o_DMEM_addr = {ID_dmem_addr[31:2], 2'b00};
     assign o_DMEM_we = ID_dmem_we;
-    assign o_DMEM_wdata = ID_valid_rdata2;
+    assign o_DMEM_wdata = ID_dmem_wdata;
     assign o_DMEM_sel = ID_dmem_sel;
     
 
@@ -232,7 +235,7 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_we(IF_ID_ena),
+        .i_we(IF_ID_ena & ~ID_data_related_confict),
         .i_data(IF_next_pc),
 
         .o_data(IF_pc_out)
@@ -258,7 +261,7 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(IF_ID_ena),
+        .i_ena(IF_ID_ena & ~ID_data_related_confict),
 
         .i_IF_current_pc(IF_pc_out),
         .i_IF_current_instr(IF_current_instr),
@@ -358,8 +361,10 @@ module Core (
         .i_instr_op(ID_current_instr[31:26]),
         .i_offset(ID_current_instr[15:0]),
         .i_base_reg_value(ID_valid_rdata1),
+        .i_reg_wdata(ID_valid_rdata2),
 
         .o_mem_addr(ID_dmem_addr),
+        .o_mem_wdata(ID_dmem_wdata),
         .o_mem_sel(ID_dmem_sel),
         .o_bad_addr(ID_bad_addr)
     );
@@ -368,8 +373,8 @@ module Core (
         .clk(clk),
         .resetn(resetn & ~(ID_current_instr_is_SC | MEM_CP0_answer_exc)),
 
-        .i_data(1'b1),
-        .i_we(ID_current_instr_is_LL),
+        .i_data(ID_current_instr_is_LL),
+        .i_we(ID_current_instr_is_LL | ID_current_instr_is_SC),
 
         .o_data(ID_LL_bit_value)
     );
@@ -381,42 +386,42 @@ module Core (
 
         .i_ena(ID_EXE_ena),
 
-        .i_ID_current_instr(ID_current_instr),
+        .i_ID_current_instr(ID_data_related_confict ? 32'h0 :ID_current_instr),
         .i_ID_current_pc(ID_current_pc),
 
-        .i_ID_get_result_in_EXE(ID_get_result_in_EXE),
-        .i_ID_get_result_in_MEM(ID_get_result_in_MEM),
+        .i_ID_get_result_in_EXE(ID_data_related_confict ? 1'b0 : ID_get_result_in_EXE),
+        .i_ID_get_result_in_MEM(ID_data_related_confict ? 1'b0 : ID_get_result_in_MEM),
         .i_ID_GPR_waddr(ID_GPR_waddr),
-        .i_ID_GPR_we(ID_GPR_we),
+        .i_ID_GPR_we(ID_data_related_confict ? 1'b0 : ID_GPR_we),
 
         .i_ID_ALU_opr1(ID_ALU_opr1),
         .i_ID_ALU_opr2(ID_ALU_opr2),
-        .i_ID_ALU_op(ID_ALU_op),
+        .i_ID_ALU_op(ID_data_related_confict ? `ALU_NOP : ID_ALU_op),
 
-        .i_ID_MultDiv_is_unsigned(i_ID_MultDiv_is_unsigned),
+        .i_ID_MultDiv_is_unsigned(ID_MultDiv_is_unsigned),
 
-        .i_ID_is_div(ID_is_div),
+        .i_ID_is_div(ID_data_related_confict ? 1'b0 : ID_is_div),
         .i_ID_GPR_wdata_selection(ID_GPR_wdata_selection),
         .i_ID_dmem_addr(ID_dmem_addr),
         .i_ID_LL_bit_value(ID_LL_bit_value),
 
         .i_ID_GPR_rdata1(ID_valid_rdata1),
-        .i_ID_RegHi_we(ID_RegHi_we),
-        .i_ID_RegLo_we(ID_RegLo_we),
+        .i_ID_RegHi_we(ID_data_related_confict ? 1'b0 : ID_RegHi_we),
+        .i_ID_RegLo_we(ID_data_related_confict ? 1'b0 : ID_RegLo_we),
 
         .i_ID_LoHi_wdata_selection(ID_LoHi_wdata_selection),
 
         .i_ID_opr2_value(ID_valid_rdata2),
 
-        .i_ID_CP0_we(ID_CP0_we),
-        .i_ID_is_branch(ID_is_branch),
-        .i_EXE_is_branch(EXE_is_branch),
-        .i_ID_is_eret(ID_is_eret),
+        .i_ID_CP0_we(ID_data_related_confict ? 1'b0 : ID_CP0_we),
+        .i_ID_is_branch(ID_data_related_confict ? 1'b0 : ID_is_branch),
+        .i_EXE_is_branch(ID_data_related_confict ? 1'b0 : EXE_is_branch),
+        .i_ID_is_eret(ID_data_related_confict ? 1'b0 : ID_is_eret),
 
-        .i_ID_is_trap(ID_is_trap),
+        .i_ID_is_trap(ID_data_related_confict ? 1'b0 : ID_is_trap),
 
-        .i_ID_bad_addr(ID_bad_addr),
-        .i_ID_dmem_we(ID_dmem_we),
+        .i_ID_bad_addr(ID_data_related_confict ? 1'b0 : ID_bad_addr),
+        .i_ID_dmem_we(ID_data_related_confict ? 1'b0 : ID_dmem_we),
         .i_ID_except_cause(ID_except_cause),
 
         .o_EXE_current_instr(EXE_current_instr),
@@ -482,10 +487,10 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_dividend(EXE_ALU_opr1),
-        .i_divisor(EXE_ALU_opr2),
-        .i_is_unsigned(EXE_MultDiv_is_unsigned),
-        .i_div_start(EXE_is_div),
+        .i_dividend(ID_ALU_opr1),
+        .i_divisor(ID_ALU_opr2),
+        .i_is_unsigned(ID_MultDiv_is_unsigned),
+        .i_div_start(ID_is_div),
 
         .o_quotient(EXE_Div_quotient),
         .o_remainder(EXE_Div_remainder),
@@ -675,7 +680,7 @@ module Core (
         .i_wdata(MEM_opr2_value),
         .i_raddr(MEM_current_instr[15:11]),
 
-        .i_except_cause(MEM_CP0_except_cause),
+        .i_except_cause(EXE_MEM_ena ? MEM_CP0_except_cause : `EXC_CAUSE_NOP),
         .i_int(i_interruption),
         .i_current_pc(MEM_current_pc),
         .i_is_in_delay_slot(MEM_current_is_in_delay_slot),

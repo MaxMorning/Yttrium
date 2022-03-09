@@ -27,9 +27,9 @@ module ALU (
     wire[31:0] slt_result = $signed(i_opr1) < $signed(i_opr2) ? 32'h1 : 32'h0;
     wire[31:0] sltu_result = i_opr1 < i_opr2 ? 32'h1 : 32'h0;
 
-    wire[31:0] sll_result = i_opr2 << i_opr1;
-    wire[31:0] srl_result = i_opr2 >> i_opr1;
-    wire[31:0] sra_result = i_opr2[31] ? (~(32'hffffffff >> i_opr1) | (i_opr2 >> i_opr1)) : i_opr2 >> i_opr1;
+    wire[31:0] sll_result = i_opr2 << i_opr1[4:0];
+    wire[31:0] srl_result = i_opr2 >> i_opr1[4:0];
+    wire[31:0] sra_result = i_opr2[31] ? (~(32'hffffffff >> i_opr1[4:0]) | (i_opr2 >> i_opr1[4:0])) : i_opr2 >> i_opr1[4:0];
 
     wire[31:0] lui_result = {i_opr2[15:0], 16'h0};
 

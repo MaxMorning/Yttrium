@@ -12,6 +12,7 @@ module MemDataProc (
 );
     always @(*) begin
         case (i_instr_op)
+            `OP_LL,
             `OP_LW:
             begin
                 o_proc_data <= i_mem_data;
@@ -87,17 +88,17 @@ module MemDataProc (
 
                     2'b01:
                     begin
-                        o_proc_data <= {i_mem_data[31:24], i_reg_data[23:0]};
+                        o_proc_data <= {i_mem_data[23:0], i_reg_data[7:0]};
                     end
 
                     2'b10:
                     begin
-                        o_proc_data <= {i_mem_data[31:16], i_reg_data[15:0]};
+                        o_proc_data <= {i_mem_data[15:0], i_reg_data[15:0]};
                     end
 
                     default:
                     begin
-                        o_proc_data <= {i_mem_data[31:8], i_reg_data[7:0]};
+                        o_proc_data <= {i_mem_data[7:0], i_reg_data[23:0]};
                     end
                 endcase
             end

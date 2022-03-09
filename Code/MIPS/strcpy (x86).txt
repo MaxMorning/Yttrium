@@ -1,0 +1,775 @@
+                           .data:00400000 08 10 00 3f                      j	0x004000fc
+                           .data:00400004 00 00 00 00                      nop
+                           .data:00400008 08 10 00 04                      j	0x00400010
+                           .data:0040000c 00 00 00 00                      nop
+                           .data:00400010 3c 01 10 01                      lui	at,0x1001
+                           .data:00400014 8c 3a 03 d4                      lw	k0,980(at)
+                           .data:00400018 27 5a 00 01                      addiu	k0,k0,1
+                           .data:0040001c 3c 01 10 01                      lui	at,0x1001
+                           .data:00400020 ac 3a 03 d4                      sw	k0,980(at)
+                           .data:00400024 40 1a 68 00                      mfc0	k0,$13
+                           .data:00400028 33 5b 00 ff                      andi	k1,k0,0xff
+                           .data:0040002c 20 1a 00 00                      addi	k0,zero,0
+                           .data:00400030 13 5b 00 1c                      beq	k0,k1,0x004000a4
+                           .data:00400034 00 00 00 00                      nop
+                           .data:00400038 20 1a 00 20                      addi	k0,zero,32
+                           .data:0040003c 13 5b 00 11                      beq	k0,k1,0x00400084
+                           .data:00400040 00 00 00 00                      nop
+                           .data:00400044 20 1a 00 28                      addi	k0,zero,40
+                           .data:00400048 13 5b 00 0a                      beq	k0,k1,0x00400074
+                           .data:0040004c 00 00 00 00                      nop
+                           .data:00400050 20 1a 00 34                      addi	k0,zero,52
+                           .data:00400054 13 5b 00 0f                      beq	k0,k1,0x00400094
+                           .data:00400058 00 00 00 00                      nop
+                           .data:0040005c 20 05 00 00                      addi	a1,zero,0
+                           .data:00400060 20 01 00 0a                      addi	at,zero,10
+                           .data:00400064 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400068 3c 01 10 01                      lui	at,0x1001
+                           .data:0040006c ac 25 00 00                      sw	a1,0(at)
+                           .data:00400070 08 10 00 6e                      j	0x004001b8
+                           .data:00400074 3c 0a ff ff                      lui	t2,0xffff
+                           .data:00400078 35 4a ff ff                      ori	t2,t2,0xffff
+                           .data:0040007c 08 10 00 3a                      j	0x004000e8
+                           .data:00400080 00 00 00 00                      nop
+                           .data:00400084 3c 0b ff ff                      lui	t3,0xffff
+                           .data:00400088 35 6b ff ff                      ori	t3,t3,0xffff
+                           .data:0040008c 08 10 00 3a                      j	0x004000e8
+                           .data:00400090 00 00 00 00                      nop
+                           .data:00400094 3c 0c ff ff                      lui	t4,0xffff
+                           .data:00400098 35 8c ff ff                      ori	t4,t4,0xffff
+                           .data:0040009c 08 10 00 3a                      j	0x004000e8
+                           .data:004000a0 00 00 00 00                      nop
+                           .data:004000a4 40 01 58 00                      mfc0	at,$11
+                           .data:004000a8 20 21 01 00                      addi	at,at,256
+                           .data:004000ac 14 20 00 01                      bnez	at,0x004000b4
+                           .data:004000b0 20 21 00 01                      addi	at,at,1
+                           .data:004000b4 40 81 58 00                      mtc0	at,$11
+                           .data:004000b8 20 03 00 00                      addi	v1,zero,0
+                           .data:004000bc 3c 01 10 01                      lui	at,0x1001
+                           .data:004000c0 00 23 08 21                      addu	at,at,v1
+                           .data:004000c4 94 22 00 00                      lhu	v0,0(at)
+                           .data:004000c8 20 42 00 01                      addi	v0,v0,1
+                           .data:004000cc 3c 01 10 01                      lui	at,0x1001
+                           .data:004000d0 00 23 08 21                      addu	at,at,v1
+                           .data:004000d4 a4 22 00 00                      sh	v0,0(at)
+                           .data:004000d8 42 00 00 18                      eret
+                           .data:004000dc 00 00 00 00                      nop
+                           .data:004000e0 08 10 00 3a                      j	0x004000e8
+                           .data:004000e4 00 00 00 00                      nop
+                           .data:004000e8 40 1a 70 00                      mfc0	k0,$14
+                           .data:004000ec 23 5a 00 04                      addi	k0,k0,4
+                           .data:004000f0 40 9a 70 00                      mtc0	k0,$14
+                           .data:004000f4 42 00 00 18                      eret
+                           .data:004000f8 00 00 00 00                      nop
+                           .data:004000fc 0c 10 00 90                      jal	0x00400240
+                           .data:00400100 00 00 00 00                      nop
+                           .data:00400104 0c 10 00 70                      jal	0x004001c0
+                           .data:00400108 00 00 00 00                      nop
+                           .data:0040010c 0c 10 01 03                      jal	0x0040040c
+                           .data:00400110 00 00 00 00                      nop
+                           .data:00400114 0c 10 00 70                      jal	0x004001c0
+                           .data:00400118 00 00 00 00                      nop
+                           .data:0040011c 0c 10 01 1e                      jal	0x00400478
+                           .data:00400120 00 00 00 00                      nop
+                           .data:00400124 0c 10 00 70                      jal	0x004001c0
+                           .data:00400128 00 00 00 00                      nop
+                           .data:0040012c 0c 10 01 75                      jal	0x004005d4
+                           .data:00400130 00 00 00 00                      nop
+                           .data:00400134 0c 10 00 70                      jal	0x004001c0
+                           .data:00400138 00 00 00 00                      nop
+                           .data:0040013c 0c 10 01 86                      jal	0x00400618
+                           .data:00400140 00 00 00 00                      nop
+                           .data:00400144 0c 10 00 70                      jal	0x004001c0
+                           .data:00400148 00 00 00 00                      nop
+                           .data:0040014c 0c 10 01 b3                      jal	0x004006cc
+                           .data:00400150 00 00 00 00                      nop
+                           .data:00400154 0c 10 00 70                      jal	0x004001c0
+                           .data:00400158 00 00 00 00                      nop
+                           .data:0040015c 0c 10 01 da                      jal	0x00400768
+                           .data:00400160 00 00 00 00                      nop
+                           .data:00400164 0c 10 00 70                      jal	0x004001c0
+                           .data:00400168 00 00 00 00                      nop
+                           .data:0040016c 0c 10 02 27                      jal	0x0040089c
+                           .data:00400170 00 00 00 00                      nop
+                           .data:00400174 0c 10 00 70                      jal	0x004001c0
+                           .data:00400178 00 00 00 00                      nop
+                           .data:0040017c 0c 10 02 85                      jal	0x00400a14
+                           .data:00400180 00 00 00 00                      nop
+                           .data:00400184 0c 10 00 70                      jal	0x004001c0
+                           .data:00400188 00 00 00 00                      nop
+                           .data:0040018c 0c 10 02 a1                      jal	0x00400a84
+                           .data:00400190 00 00 00 00                      nop
+                           .data:00400194 0c 10 00 70                      jal	0x004001c0
+                           .data:00400198 00 00 00 00                      nop
+                           .data:0040019c 0c 10 03 00                      jal	0x00400c00
+                           .data:004001a0 00 00 00 00                      nop
+                           .data:004001a4 0c 10 00 70                      jal	0x004001c0
+                           .data:004001a8 00 00 00 00                      nop
+                           .data:004001ac 20 05 00 01                      addi	a1,zero,1
+                           .data:004001b0 3c 01 10 01                      lui	at,0x1001
+                           .data:004001b4 ac 25 00 00                      sw	a1,0(at)
+                           .data:004001b8 08 10 00 6e                      j	0x004001b8
+                           .data:004001bc 00 00 00 00                      nop
+                           .data:004001c0 20 01 00 00                      addi	at,zero,0
+                           .data:004001c4 20 02 00 00                      addi	v0,zero,0
+                           .data:004001c8 20 03 00 00                      addi	v1,zero,0
+                           .data:004001cc 20 04 00 00                      addi	a0,zero,0
+                           .data:004001d0 20 05 00 00                      addi	a1,zero,0
+                           .data:004001d4 20 06 00 00                      addi	a2,zero,0
+                           .data:004001d8 20 07 00 00                      addi	a3,zero,0
+                           .data:004001dc 20 08 00 00                      addi	t0,zero,0
+                           .data:004001e0 20 09 00 00                      addi	t1,zero,0
+                           .data:004001e4 20 0a 00 00                      addi	t2,zero,0
+                           .data:004001e8 20 0b 00 00                      addi	t3,zero,0
+                           .data:004001ec 20 0c 00 00                      addi	t4,zero,0
+                           .data:004001f0 20 0d 00 00                      addi	t5,zero,0
+                           .data:004001f4 20 0e 00 00                      addi	t6,zero,0
+                           .data:004001f8 20 0f 00 00                      addi	t7,zero,0
+                           .data:004001fc 20 10 00 00                      addi	s0,zero,0
+                           .data:00400200 20 11 00 00                      addi	s1,zero,0
+                           .data:00400204 20 12 00 00                      addi	s2,zero,0
+                           .data:00400208 20 13 00 00                      addi	s3,zero,0
+                           .data:0040020c 20 14 00 00                      addi	s4,zero,0
+                           .data:00400210 20 15 00 00                      addi	s5,zero,0
+                           .data:00400214 20 16 00 00                      addi	s6,zero,0
+                           .data:00400218 20 17 00 00                      addi	s7,zero,0
+                           .data:0040021c 20 18 00 00                      addi	t8,zero,0
+                           .data:00400220 20 19 00 00                      addi	t9,zero,0
+                           .data:00400224 20 1a 00 00                      addi	k0,zero,0
+                           .data:00400228 20 1b 00 00                      addi	k1,zero,0
+                           .data:0040022c 20 1c 00 00                      addi	gp,zero,0
+                           .data:00400230 20 1d 00 00                      addi	sp,zero,0
+                           .data:00400234 20 1e 00 00                      addi	s8,zero,0
+                           .data:00400238 03 e0 00 08                      jr	ra
+                           .data:0040023c 00 00 00 00                      nop
+                           .data:00400240 20 02 00 00                      addi	v0,zero,0
+                           .data:00400244 24 03 00 01                      li	v1,1
+                           .data:00400248 30 04 04 d2                      andi	a0,zero,0x4d2
+                           .data:0040024c 28 65 00 00                      slti	a1,v1,0
+                           .data:00400250 34 06 00 01                      li	a2,0x1
+                           .data:00400254 38 67 00 01                      xori	a3,v1,0x1
+                           .data:00400258 2c 08 00 01                      sltiu	t0,zero,1
+                           .data:0040025c 00 00 50 21                      move	t2,zero
+                           .data:00400260 20 0b 00 3c                      addi	t3,zero,60
+                           .data:00400264 00 0b 60 24                      and	t4,zero,t3
+                           .data:00400268 20 0e 00 03                      addi	t6,zero,3
+                           .data:0040026c 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400270 03 60 d8 21                      move	k1,k1
+                           .data:00400274 3c 01 10 01                      lui	at,0x1001
+                           .data:00400278 00 3b 08 21                      addu	at,at,k1
+                           .data:0040027c ac 22 00 04                      sw	v0,4(at)
+                           .data:00400280 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400284 03 60 d8 21                      move	k1,k1
+                           .data:00400288 3c 01 10 01                      lui	at,0x1001
+                           .data:0040028c 00 3b 08 21                      addu	at,at,k1
+                           .data:00400290 ac 23 00 f4                      sw	v1,244(at)
+                           .data:00400294 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400298 03 60 d8 21                      move	k1,k1
+                           .data:0040029c 3c 01 10 01                      lui	at,0x1001
+                           .data:004002a0 00 3b 08 21                      addu	at,at,k1
+                           .data:004002a4 ac 22 01 e4                      sw	v0,484(at)
+                           .data:004002a8 3c 1b 00 00                      lui	k1,0x0
+                           .data:004002ac 03 60 d8 21                      move	k1,k1
+                           .data:004002b0 3c 01 10 01                      lui	at,0x1001
+                           .data:004002b4 00 3b 08 21                      addu	at,at,k1
+                           .data:004002b8 ac 23 02 d4                      sw	v1,724(at)
+                           .data:004002bc 00 06 60 80                      sll	t4,a2,0x2
+                           .data:004002c0 00 e6 38 20                      add	a3,a3,a2
+                           .data:004002c4 3c 1b 00 00                      lui	k1,0x0
+                           .data:004002c8 03 6c d8 21                      addu	k1,k1,t4
+                           .data:004002cc 3c 01 10 01                      lui	at,0x1001
+                           .data:004002d0 00 3b 08 21                      addu	at,at,k1
+                           .data:004002d4 ac 27 00 04                      sw	a3,4(at)
+                           .data:004002d8 71 c6 78 02                      0x71c67802
+                           .data:004002dc 01 0f 40 20                      add	t0,t0,t7
+                           .data:004002e0 3c 1b 00 00                      lui	k1,0x0
+                           .data:004002e4 03 6c d8 21                      addu	k1,k1,t4
+                           .data:004002e8 3c 01 10 01                      lui	at,0x1001
+                           .data:004002ec 00 3b 08 21                      addu	at,at,k1
+                           .data:004002f0 ac 28 00 f4                      sw	t0,244(at)
+                           .data:004002f4 28 ca 00 14                      slti	t2,a2,20
+                           .data:004002f8 20 01 00 01                      addi	at,zero,1
+                           .data:004002fc 14 2a 00 0e                      bne	at,t2,0x00400338
+                           .data:00400300 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400304 03 6c d8 21                      addu	k1,k1,t4
+                           .data:00400308 3c 01 10 01                      lui	at,0x1001
+                           .data:0040030c 00 3b 08 21                      addu	at,at,k1
+                           .data:00400310 ac 27 01 e4                      sw	a3,484(at)
+                           .data:00400314 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400318 03 6c d8 21                      addu	k1,k1,t4
+                           .data:0040031c 3c 01 10 01                      lui	at,0x1001
+                           .data:00400320 00 3b 08 21                      addu	at,at,k1
+                           .data:00400324 ac 28 02 d4                      sw	t0,724(at)
+                           .data:00400328 20 ef 00 00                      addi	t7,a3,0
+                           .data:0040032c 21 10 00 00                      addi	s0,t0,0
+                           .data:00400330 08 10 00 eb                      j	0x004003ac
+                           .data:00400334 00 00 00 00                      nop
+                           .data:00400338 28 ca 00 28                      slti	t2,a2,40
+                           .data:0040033c 20 1b 00 01                      addi	k1,zero,1
+                           .data:00400340 15 5b 00 0e                      bne	t2,k1,0x0040037c
+                           .data:00400344 00 e8 78 20                      add	t7,a3,t0
+                           .data:00400348 3c 1b 00 00                      lui	k1,0x0
+                           .data:0040034c 03 6c d8 21                      addu	k1,k1,t4
+                           .data:00400350 3c 01 10 01                      lui	at,0x1001
+                           .data:00400354 00 3b 08 21                      addu	at,at,k1
+                           .data:00400358 ac 2f 01 e4                      sw	t7,484(at)
+                           .data:0040035c 71 e7 80 02                      0x71e78002
+                           .data:00400360 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400364 03 6c d8 21                      addu	k1,k1,t4
+                           .data:00400368 3c 01 10 01                      lui	at,0x1001
+                           .data:0040036c 00 3b 08 21                      addu	at,at,k1
+                           .data:00400370 ac 30 02 d4                      sw	s0,724(at)
+                           .data:00400374 08 10 00 eb                      j	0x004003ac
+                           .data:00400378 00 00 00 00                      nop
+                           .data:0040037c 70 e8 78 02                      0x70e87802
+                           .data:00400380 3c 1b 00 00                      lui	k1,0x0
+                           .data:00400384 03 6c d8 21                      addu	k1,k1,t4
+                           .data:00400388 3c 01 10 01                      lui	at,0x1001
+                           .data:0040038c 00 3b 08 21                      addu	at,at,k1
+                           .data:00400390 ac 2f 01 e4                      sw	t7,484(at)
+                           .data:00400394 71 e8 80 02                      0x71e88002
+                           .data:00400398 3c 1b 00 00                      lui	k1,0x0
+                           .data:0040039c 03 6c d8 21                      addu	k1,k1,t4
+                           .data:004003a0 3c 01 10 01                      lui	at,0x1001
+                           .data:004003a4 00 3b 08 21                      addu	at,at,k1
+                           .data:004003a8 ac 30 02 d4                      sw	s0,724(at)
+                           .data:004003ac 20 c6 00 01                      addi	a2,a2,1
+                           .data:004003b0 14 cb ff c2                      bne	a2,t3,0x004002bc
+                           .data:004003b4 00 00 00 00                      nop
+                           .data:004003b8 20 02 00 3b                      addi	v0,zero,59
+                           .data:004003bc 00 02 10 80                      sll	v0,v0,0x2
+                           .data:004003c0 3c 01 10 01                      lui	at,0x1001
+                           .data:004003c4 00 22 08 21                      addu	at,at,v0
+                           .data:004003c8 8c 23 02 d4                      lw	v1,724(at)
+                           .data:004003cc 20 04 00 00                      addi	a0,zero,0
+                           .data:004003d0 3c 04 9f d0                      lui	a0,0x9fd0
+                           .data:004003d4 3c 01 00 00                      lui	at,0x0
+                           .data:004003d8 34 21 b7 ea                      ori	at,at,0xb7ea
+                           .data:004003dc 00 81 20 20                      add	a0,a0,at
+                           .data:004003e0 10 64 00 08                      beq	v1,a0,0x00400404
+                           .data:004003e4 00 00 00 00                      nop
+                           .data:004003e8 20 05 00 00                      addi	a1,zero,0
+                           .data:004003ec 20 01 00 01                      addi	at,zero,1
+                           .data:004003f0 00 a1 28 22                      sub	a1,a1,at
+                           .data:004003f4 3c 01 10 01                      lui	at,0x1001
+                           .data:004003f8 ac 25 00 00                      sw	a1,0(at)
+                           .data:004003fc 08 10 00 6e                      j	0x004001b8
+                           .data:00400400 00 00 00 00                      nop
+                           .data:00400404 03 e0 00 08                      jr	ra
+                           .data:00400408 00 00 00 00                      nop
+                           .data:0040040c 20 03 7f ff                      addi	v1,zero,32767
+                           .data:00400410 20 04 00 10                      addi	a0,zero,16
+                           .data:00400414 00 64 00 1a                      div	zero,v1,a0
+                           .data:00400418 00 00 a0 10                      mfhi	s4
+                           .data:0040041c 00 00 a8 12                      mflo	s5
+                           .data:00400420 3c 03 ff ff                      lui	v1,0xffff
+                           .data:00400424 34 63 ff f8                      ori	v1,v1,0xfff8
+                           .data:00400428 20 04 00 02                      addi	a0,zero,2
+                           .data:0040042c 00 64 00 1b                      divu	zero,v1,a0
+                           .data:00400430 00 00 b0 10                      mfhi	s6
+                           .data:00400434 00 00 b8 12                      mflo	s7
+                           .data:00400438 02 95 a0 26                      xor	s4,s4,s5
+                           .data:0040043c 02 d7 b0 27                      nor	s6,s6,s7
+                           .data:00400440 02 96 a0 25                      or	s4,s4,s6
+                           .data:00400444 3c 02 80 00                      lui	v0,0x8000
+                           .data:00400448 20 42 07 f3                      addi	v0,v0,2035
+                           .data:0040044c 12 82 00 08                      beq	s4,v0,0x00400470
+                           .data:00400450 00 00 00 00                      nop
+                           .data:00400454 20 05 00 00                      addi	a1,zero,0
+                           .data:00400458 20 01 00 02                      addi	at,zero,2
+                           .data:0040045c 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400460 3c 01 10 01                      lui	at,0x1001
+                           .data:00400464 ac 25 00 00                      sw	a1,0(at)
+                           .data:00400468 08 10 00 6e                      j	0x004001b8
+                           .data:0040046c 00 00 00 00                      nop
+                           .data:00400470 03 e0 00 08                      jr	ra
+                           .data:00400474 00 00 00 00                      nop
+                           .data:00400478 20 02 00 0f                      addi	v0,zero,15
+                           .data:0040047c 20 03 00 ff                      addi	v1,zero,255
+                           .data:00400480 20 04 0f ff                      addi	a0,zero,4095
+                           .data:00400484 20 05 ff ff                      addi	a1,zero,-1
+                           .data:00400488 20 06 55 55                      addi	a2,zero,21845
+                           .data:0040048c 20 07 aa aa                      addi	a3,zero,-21846
+                           .data:00400490 20 08 bb bb                      addi	t0,zero,-17477
+                           .data:00400494 20 09 cc cc                      addi	t1,zero,-13108
+                           .data:00400498 20 0a dd dd                      addi	t2,zero,-8739
+                           .data:0040049c 20 0b ee ee                      addi	t3,zero,-4370
+                           .data:004004a0 20 0c ff ff                      addi	t4,zero,-1
+                           .data:004004a4 3c 01 10 01                      lui	at,0x1001
+                           .data:004004a8 a0 22 03 c4                      sb	v0,964(at)
+                           .data:004004ac 3c 01 10 01                      lui	at,0x1001
+                           .data:004004b0 a0 23 03 c5                      sb	v1,965(at)
+                           .data:004004b4 3c 01 10 01                      lui	at,0x1001
+                           .data:004004b8 a0 24 03 c6                      sb	a0,966(at)
+                           .data:004004bc 3c 01 10 01                      lui	at,0x1001
+                           .data:004004c0 a0 25 03 c7                      sb	a1,967(at)
+                           .data:004004c4 3c 01 10 01                      lui	at,0x1001
+                           .data:004004c8 a4 26 03 c8                      sh	a2,968(at)
+                           .data:004004cc 3c 01 10 01                      lui	at,0x1001
+                           .data:004004d0 a4 27 03 ca                      sh	a3,970(at)
+                           .data:004004d4 3c 01 10 01                      lui	at,0x1001
+                           .data:004004d8 a4 28 03 cc                      sh	t0,972(at)
+                           .data:004004dc 3c 01 10 01                      lui	at,0x1001
+                           .data:004004e0 a4 29 03 ce                      sh	t1,974(at)
+                           .data:004004e4 01 40 00 11                      mthi	t2
+                           .data:004004e8 01 60 00 13                      mtlo	t3
+                           .data:004004ec 3c 01 10 01                      lui	at,0x1001
+                           .data:004004f0 90 22 03 c7                      lbu	v0,967(at)
+                           .data:004004f4 3c 01 10 01                      lui	at,0x1001
+                           .data:004004f8 90 23 03 c4                      lbu	v1,964(at)
+                           .data:004004fc 3c 01 10 01                      lui	at,0x1001
+                           .data:00400500 80 24 03 c5                      lb	a0,965(at)
+                           .data:00400504 3c 01 10 01                      lui	at,0x1001
+                           .data:00400508 80 25 03 c6                      lb	a1,966(at)
+                           .data:0040050c 3c 01 10 01                      lui	at,0x1001
+                           .data:00400510 84 26 03 ca                      lh	a2,970(at)
+                           .data:00400514 3c 01 10 01                      lui	at,0x1001
+                           .data:00400518 84 27 03 cc                      lh	a3,972(at)
+                           .data:0040051c 3c 01 10 01                      lui	at,0x1001
+                           .data:00400520 94 28 03 ce                      lhu	t0,974(at)
+                           .data:00400524 3c 01 10 01                      lui	at,0x1001
+                           .data:00400528 94 29 03 c8                      lhu	t1,968(at)
+                           .data:0040052c 00 00 50 12                      mflo	t2
+                           .data:00400530 00 00 58 10                      mfhi	t3
+                           .data:00400534 00 43 68 2a                      slt	t5,v0,v1
+                           .data:00400538 00 64 70 2b                      sltu	t6,v1,a0
+                           .data:0040053c 00 a4 78 04                      sllv	t7,a0,a1
+                           .data:00400540 00 c5 80 04                      sllv	s0,a1,a2
+                           .data:00400544 01 07 88 07                      srav	s1,a3,t0
+                           .data:00400548 01 28 90 07                      srav	s2,t0,t1
+                           .data:0040054c 01 49 98 06                      srlv	s3,t1,t2
+                           .data:00400550 01 6a a0 06                      srlv	s4,t2,t3
+                           .data:00400554 00 05 a9 43                      sra	s5,a1,0x5
+                           .data:00400558 00 06 b1 83                      sra	s6,a2,0x6
+                           .data:0040055c 00 07 b9 c2                      srl	s7,a3,0x7
+                           .data:00400560 00 08 c2 02                      srl	t8,t0,0x8
+                           .data:00400564 01 ae c8 23                      subu	t9,t5,t6
+                           .data:00400568 01 f0 d0 23                      subu	k0,t7,s0
+                           .data:0040056c 02 32 d8 20                      add	k1,s1,s2
+                           .data:00400570 02 74 e0 20                      add	gp,s3,s4
+                           .data:00400574 02 b6 e8 21                      addu	sp,s5,s6
+                           .data:00400578 02 f8 f0 21                      addu	s8,s7,t8
+                           .data:0040057c 73 20 10 21                      0x73201021
+                           .data:00400580 73 40 20 20                      0x73402020
+                           .data:00400584 03 7c 18 20                      add	v1,k1,gp
+                           .data:00400588 03 be 28 22                      sub	a1,sp,s8
+                           .data:0040058c 00 43 10 20                      add	v0,v0,v1
+                           .data:00400590 00 85 20 20                      add	a0,a0,a1
+                           .data:00400594 00 44 10 20                      add	v0,v0,a0
+                           .data:00400598 3c 03 fd ff                      lui	v1,0xfdff
+                           .data:0040059c 3c 01 00 00                      lui	at,0x0
+                           .data:004005a0 34 21 fe 89                      ori	at,at,0xfe89
+                           .data:004005a4 00 61 18 20                      add	v1,v1,at
+                           .data:004005a8 10 62 00 08                      beq	v1,v0,0x004005cc
+                           .data:004005ac 00 00 00 00                      nop
+                           .data:004005b0 20 05 00 00                      addi	a1,zero,0
+                           .data:004005b4 20 01 00 03                      addi	at,zero,3
+                           .data:004005b8 00 a1 28 22                      sub	a1,a1,at
+                           .data:004005bc 3c 01 10 01                      lui	at,0x1001
+                           .data:004005c0 ac 25 00 00                      sw	a1,0(at)
+                           .data:004005c4 08 10 00 6e                      j	0x004001b8
+                           .data:004005c8 00 00 00 00                      nop
+                           .data:004005cc 03 e0 00 08                      jr	ra
+                           .data:004005d0 00 00 00 00                      nop
+                           .data:004005d4 00 1f a0 20                      add	s4,zero,ra
+                           .data:004005d8 0c 10 01 78                      jal	0x004005e0
+                           .data:004005dc 00 00 00 00                      nop
+                           .data:004005e0 00 1f a8 20                      add	s5,zero,ra
+                           .data:004005e4 22 b5 00 10                      addi	s5,s5,16
+                           .data:004005e8 02 a0 b0 09                      jalr	s6,s5
+                           .data:004005ec 12 b6 00 08                      beq	s5,s6,0x00400610
+                           .data:004005f0 00 00 00 00                      nop
+                           .data:004005f4 20 05 00 00                      addi	a1,zero,0
+                           .data:004005f8 20 01 00 04                      addi	at,zero,4
+                           .data:004005fc 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400600 3c 01 10 01                      lui	at,0x1001
+                           .data:00400604 ac 25 00 00                      sw	a1,0(at)
+                           .data:00400608 08 10 00 6e                      j	0x004001b8
+                           .data:0040060c 00 00 00 00                      nop
+                           .data:00400610 02 80 00 08                      jr	s4
+                           .data:00400614 00 00 00 00                      nop
+                           .data:00400618 34 01 ff ff                      li	at,0xffff
+                           .data:0040061c 00 01 0c 00                      sll	at,at,0x10
+                           .data:00400620 34 21 ff fb                      ori	at,at,0xfffb
+                           .data:00400624 34 02 00 06                      li	v0,0x6
+                           .data:00400628 00 22 00 18                      mult	at,v0
+                           .data:0040062c 00 00 18 10                      mfhi	v1
+                           .data:00400630 00 00 20 12                      mflo	a0
+                           .data:00400634 70 22 00 00                      0x70220000
+                           .data:00400638 00 00 28 10                      mfhi	a1
+                           .data:0040063c 00 00 30 12                      mflo	a2
+                           .data:00400640 70 22 00 01                      0x70220001
+                           .data:00400644 00 00 38 10                      mfhi	a3
+                           .data:00400648 00 00 40 12                      mflo	t0
+                           .data:0040064c 70 22 00 04                      0x70220004
+                           .data:00400650 00 00 48 10                      mfhi	t1
+                           .data:00400654 00 00 50 12                      mflo	t2
+                           .data:00400658 70 22 00 05                      0x70220005
+                           .data:0040065c 00 00 58 10                      mfhi	t3
+                           .data:00400660 00 00 60 12                      mflo	t4
+                           .data:00400664 00 22 00 19                      multu	at,v0
+                           .data:00400668 00 00 68 10                      mfhi	t5
+                           .data:0040066c 00 00 70 12                      mflo	t6
+                           .data:00400670 00 64 78 22                      sub	t7,v1,a0
+                           .data:00400674 00 a6 80 22                      sub	s0,a1,a2
+                           .data:00400678 00 e8 88 22                      sub	s1,a3,t0
+                           .data:0040067c 01 2a 90 22                      sub	s2,t1,t2
+                           .data:00400680 01 6c 98 22                      sub	s3,t3,t4
+                           .data:00400684 01 ae a0 22                      sub	s4,t5,t6
+                           .data:00400688 01 f0 a8 20                      add	s5,t7,s0
+                           .data:0040068c 02 32 b0 20                      add	s6,s1,s2
+                           .data:00400690 02 74 b8 20                      add	s7,s3,s4
+                           .data:00400694 02 b6 c0 20                      add	t8,s5,s6
+                           .data:00400698 03 17 c0 20                      add	t8,t8,s7
+                           .data:0040069c 20 03 01 38                      addi	v1,zero,312
+                           .data:004006a0 13 03 00 08                      beq	t8,v1,0x004006c4
+                           .data:004006a4 00 00 00 00                      nop
+                           .data:004006a8 20 05 00 00                      addi	a1,zero,0
+                           .data:004006ac 20 01 00 05                      addi	at,zero,5
+                           .data:004006b0 00 a1 28 22                      sub	a1,a1,at
+                           .data:004006b4 3c 01 10 01                      lui	at,0x1001
+                           .data:004006b8 ac 25 00 00                      sw	a1,0(at)
+                           .data:004006bc 08 10 00 6e                      j	0x004001b8
+                           .data:004006c0 00 00 00 00                      nop
+                           .data:004006c4 03 e0 00 08                      jr	ra
+                           .data:004006c8 00 00 00 00                      nop
+                           .data:004006cc 3c 02 00 00                      lui	v0,0x0
+                           .data:004006d0 3c 03 ff ff                      lui	v1,0xffff
+                           .data:004006d4 3c 04 05 05                      lui	a0,0x505
+                           .data:004006d8 3c 05 00 00                      lui	a1,0x0
+                           .data:004006dc 00 62 28 0a                      0x62280a
+                           .data:004006e0 3c 01 ff ff                      lui	at,0xffff
+                           .data:004006e4 34 21 00 00                      ori	at,at,0x0
+                           .data:004006e8 00 01 a0 20                      add	s4,zero,at
+                           .data:004006ec 14 b4 00 15                      bne	a1,s4,0x00400744
+                           .data:004006f0 00 00 00 00                      nop
+                           .data:004006f4 00 82 28 0b                      0x82280b
+                           .data:004006f8 3c 01 ff ff                      lui	at,0xffff
+                           .data:004006fc 34 21 00 00                      ori	at,at,0x0
+                           .data:00400700 00 01 a0 20                      add	s4,zero,at
+                           .data:00400704 14 b4 00 0f                      bne	a1,s4,0x00400744
+                           .data:00400708 00 00 00 00                      nop
+                           .data:0040070c 00 83 28 0b                      0x83280b
+                           .data:00400710 3c 01 05 05                      lui	at,0x505
+                           .data:00400714 34 21 00 00                      ori	at,at,0x0
+                           .data:00400718 00 01 a0 20                      add	s4,zero,at
+                           .data:0040071c 14 b4 00 09                      bne	a1,s4,0x00400744
+                           .data:00400720 00 00 00 00                      nop
+                           .data:00400724 00 64 28 0a                      0x64280a
+                           .data:00400728 3c 01 05 05                      lui	at,0x505
+                           .data:0040072c 34 21 00 00                      ori	at,at,0x0
+                           .data:00400730 00 01 a0 20                      add	s4,zero,at
+                           .data:00400734 14 b4 00 03                      bne	a1,s4,0x00400744
+                           .data:00400738 00 00 00 00                      nop
+                           .data:0040073c 08 10 01 d8                      j	0x00400760
+                           .data:00400740 00 00 00 00                      nop
+                           .data:00400744 20 05 00 00                      addi	a1,zero,0
+                           .data:00400748 20 01 00 06                      addi	at,zero,6
+                           .data:0040074c 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400750 3c 01 10 01                      lui	at,0x1001
+                           .data:00400754 ac 25 00 00                      sw	a1,0(at)
+                           .data:00400758 08 10 00 6e                      j	0x004001b8
+                           .data:0040075c 00 00 00 00                      nop
+                           .data:00400760 03 e0 00 08                      jr	ra
+                           .data:00400764 00 00 00 00                      nop
+                           .data:00400768 00 1f f0 20                      add	s8,zero,ra
+                           .data:0040076c 20 0a 00 00                      addi	t2,zero,0
+                           .data:00400770 05 41 00 02                      bgez	t2,0x0040077c
+                           .data:00400774 00 00 00 00                      nop
+                           .data:00400778 08 10 02 1e                      j	0x00400878
+                           .data:0040077c 21 4a 00 01                      addi	t2,t2,1
+                           .data:00400780 05 41 00 02                      bgez	t2,0x0040078c
+                           .data:00400784 00 00 00 00                      nop
+                           .data:00400788 08 10 02 1e                      j	0x00400878
+                           .data:0040078c 20 14 00 01                      addi	s4,zero,1
+                           .data:00400790 00 14 50 22                      neg	t2,s4
+                           .data:00400794 05 41 00 38                      bgez	t2,0x00400878
+                           .data:00400798 20 0a 00 01                      addi	t2,zero,1
+                           .data:0040079c 1d 40 00 02                      bgtz	t2,0x004007a8
+                           .data:004007a0 00 00 00 00                      nop
+                           .data:004007a4 08 10 02 1e                      j	0x00400878
+                           .data:004007a8 21 4a 00 02                      addi	t2,t2,2
+                           .data:004007ac 1d 40 00 02                      bgtz	t2,0x004007b8
+                           .data:004007b0 00 00 00 00                      nop
+                           .data:004007b4 08 10 02 1e                      j	0x00400878
+                           .data:004007b8 20 14 00 01                      addi	s4,zero,1
+                           .data:004007bc 00 14 50 22                      neg	t2,s4
+                           .data:004007c0 1d 40 00 2d                      bgtz	t2,0x00400878
+                           .data:004007c4 20 0a 00 01                      addi	t2,zero,1
+                           .data:004007c8 19 40 00 2b                      blez	t2,0x00400878
+                           .data:004007cc 21 4a 00 02                      addi	t2,t2,2
+                           .data:004007d0 19 40 00 29                      blez	t2,0x00400878
+                           .data:004007d4 20 14 00 01                      addi	s4,zero,1
+                           .data:004007d8 00 14 50 22                      neg	t2,s4
+                           .data:004007dc 19 40 00 02                      blez	t2,0x004007e8
+                           .data:004007e0 00 00 00 00                      nop
+                           .data:004007e4 08 10 02 1e                      j	0x00400878
+                           .data:004007e8 20 0a 00 00                      addi	t2,zero,0
+                           .data:004007ec 05 40 00 22                      bltz	t2,0x00400878
+                           .data:004007f0 21 4a 00 01                      addi	t2,t2,1
+                           .data:004007f4 05 40 00 20                      bltz	t2,0x00400878
+                           .data:004007f8 20 14 00 01                      addi	s4,zero,1
+                           .data:004007fc 00 14 50 22                      neg	t2,s4
+                           .data:00400800 05 40 00 02                      bltz	t2,0x0040080c
+                           .data:00400804 00 00 00 00                      nop
+                           .data:00400808 08 10 02 1e                      j	0x00400878
+                           .data:0040080c 20 1f 00 00                      addi	ra,zero,0
+                           .data:00400810 20 0a 00 00                      addi	t2,zero,0
+                           .data:00400814 05 50 00 18                      bltzal	t2,0x00400878
+                           .data:00400818 21 4a 00 01                      addi	t2,t2,1
+                           .data:0040081c 05 50 00 16                      bltzal	t2,0x00400878
+                           .data:00400820 20 14 00 01                      addi	s4,zero,1
+                           .data:00400824 00 14 50 22                      neg	t2,s4
+                           .data:00400828 05 50 00 02                      bltzal	t2,0x00400834
+                           .data:0040082c 00 00 00 00                      nop
+                           .data:00400830 08 10 02 1e                      j	0x00400878
+                           .data:00400834 13 e0 00 10                      beqz	ra,0x00400878
+                           .data:00400838 20 1f 00 00                      addi	ra,zero,0
+                           .data:0040083c 20 0a 00 00                      addi	t2,zero,0
+                           .data:00400840 05 51 00 02                      bgezal	t2,0x0040084c
+                           .data:00400844 00 00 00 00                      nop
+                           .data:00400848 08 10 02 1e                      j	0x00400878
+                           .data:0040084c 21 4a 00 01                      addi	t2,t2,1
+                           .data:00400850 05 51 00 02                      bgezal	t2,0x0040085c
+                           .data:00400854 00 00 00 00                      nop
+                           .data:00400858 08 10 02 1e                      j	0x00400878
+                           .data:0040085c 20 14 00 01                      addi	s4,zero,1
+                           .data:00400860 00 14 50 22                      neg	t2,s4
+                           .data:00400864 05 51 00 04                      bgezal	t2,0x00400878
+                           .data:00400868 00 00 00 00                      nop
+                           .data:0040086c 13 e0 00 02                      beqz	ra,0x00400878
+                           .data:00400870 00 00 00 00                      nop
+                           .data:00400874 08 10 02 25                      j	0x00400894
+                           .data:00400878 20 05 00 00                      addi	a1,zero,0
+                           .data:0040087c 20 01 00 07                      addi	at,zero,7
+                           .data:00400880 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400884 3c 01 10 01                      lui	at,0x1001
+                           .data:00400888 ac 25 00 00                      sw	a1,0(at)
+                           .data:0040088c 08 10 00 6e                      j	0x004001b8
+                           .data:00400890 00 00 00 00                      nop
+                           .data:00400894 03 c0 00 08                      jr	s8
+                           .data:00400898 00 00 00 00                      nop
+                           .data:0040089c 20 01 00 01                      addi	at,zero,1
+                           .data:004008a0 20 02 00 02                      addi	v0,zero,2
+                           .data:004008a4 20 03 00 03                      addi	v1,zero,3
+                           .data:004008a8 20 04 00 04                      addi	a0,zero,4
+                           .data:004008ac 20 05 00 05                      addi	a1,zero,5
+                           .data:004008b0 20 06 00 06                      addi	a2,zero,6
+                           .data:004008b4 20 07 00 07                      addi	a3,zero,7
+                           .data:004008b8 20 08 00 08                      addi	t0,zero,8
+                           .data:004008bc 20 09 00 09                      addi	t1,zero,9
+                           .data:004008c0 20 0a 00 0a                      addi	t2,zero,10
+                           .data:004008c4 20 0b 00 0b                      addi	t3,zero,11
+                           .data:004008c8 20 0c 00 0c                      addi	t4,zero,12
+                           .data:004008cc 20 0d 00 0d                      addi	t5,zero,13
+                           .data:004008d0 20 0e 00 0e                      addi	t6,zero,14
+                           .data:004008d4 20 0f 00 0f                      addi	t7,zero,15
+                           .data:004008d8 20 10 00 10                      addi	s0,zero,16
+                           .data:004008dc 20 11 00 11                      addi	s1,zero,17
+                           .data:004008e0 20 12 00 12                      addi	s2,zero,18
+                           .data:004008e4 20 13 00 13                      addi	s3,zero,19
+                           .data:004008e8 20 14 00 14                      addi	s4,zero,20
+                           .data:004008ec 3c 1e 10 01                      lui	s8,0x1001
+                           .data:004008f0 ab c0 00 00                      swl	zero,0(s8)
+                           .data:004008f4 ab c1 00 01                      swl	at,1(s8)
+                           .data:004008f8 ab c2 00 02                      swl	v0,2(s8)
+                           .data:004008fc ab c3 00 03                      swl	v1,3(s8)
+                           .data:00400900 ab c4 00 04                      swl	a0,4(s8)
+                           .data:00400904 ab c5 00 05                      swl	a1,5(s8)
+                           .data:00400908 a3 c6 00 06                      sb	a2,6(s8)
+                           .data:0040090c bb c7 00 07                      swr	a3,7(s8)
+                           .data:00400910 a3 c8 00 08                      sb	t0,8(s8)
+                           .data:00400914 ab c9 00 09                      swl	t1,9(s8)
+                           .data:00400918 bb ca 00 0a                      swr	t2,10(s8)
+                           .data:0040091c bb cb 00 0b                      swr	t3,11(s8)
+                           .data:00400920 bb cc 00 0c                      swr	t4,12(s8)
+                           .data:00400924 bb cd 00 0d                      swr	t5,13(s8)
+                           .data:00400928 bb ce 00 0e                      swr	t6,14(s8)
+                           .data:0040092c bb cf 00 0f                      swr	t7,15(s8)
+                           .data:00400930 a3 d0 00 10                      sb	s0,16(s8)
+                           .data:00400934 ab d1 00 11                      swl	s1,17(s8)
+                           .data:00400938 a3 d2 00 12                      sb	s2,18(s8)
+                           .data:0040093c bb d3 00 13                      swr	s3,19(s8)
+                           .data:00400940 a3 d4 00 14                      sb	s4,20(s8)
+                           .data:00400944 9b d4 00 01                      lwr	s4,1(s8)
+                           .data:00400948 9b c1 00 02                      lwr	at,2(s8)
+                           .data:0040094c 8b c2 00 03                      lwl	v0,3(s8)
+                           .data:00400950 8b c3 00 04                      lwl	v1,4(s8)
+                           .data:00400954 9b c4 00 05                      lwr	a0,5(s8)
+                           .data:00400958 9b c5 00 06                      lwr	a1,6(s8)
+                           .data:0040095c 8b c6 00 07                      lwl	a2,7(s8)
+                           .data:00400960 8b c7 00 08                      lwl	a3,8(s8)
+                           .data:00400964 9b c8 00 09                      lwr	t0,9(s8)
+                           .data:00400968 9b c9 00 0a                      lwr	t1,10(s8)
+                           .data:0040096c 8b ca 00 0b                      lwl	t2,11(s8)
+                           .data:00400970 8b cb 00 0c                      lwl	t3,12(s8)
+                           .data:00400974 9b cc 00 0d                      lwr	t4,13(s8)
+                           .data:00400978 9b cd 00 0e                      lwr	t5,14(s8)
+                           .data:0040097c 9b ce 00 0f                      lwr	t6,15(s8)
+                           .data:00400980 9b cf 00 10                      lwr	t7,16(s8)
+                           .data:00400984 9b d0 00 11                      lwr	s0,17(s8)
+                           .data:00400988 8b d1 00 12                      lwl	s1,18(s8)
+                           .data:0040098c 8b d2 00 13                      lwl	s2,19(s8)
+                           .data:00400990 8b d3 00 14                      lwl	s3,20(s8)
+                           .data:00400994 00 22 a8 20                      add	s5,at,v0
+                           .data:00400998 00 64 b0 20                      add	s6,v1,a0
+                           .data:0040099c 00 a6 b8 20                      add	s7,a1,a2
+                           .data:004009a0 00 e8 c0 20                      add	t8,a3,t0
+                           .data:004009a4 01 2a c8 20                      add	t9,t1,t2
+                           .data:004009a8 01 6c d0 20                      add	k0,t3,t4
+                           .data:004009ac 01 ae d8 20                      add	k1,t5,t6
+                           .data:004009b0 01 f0 e0 20                      add	gp,t7,s0
+                           .data:004009b4 02 32 e8 20                      add	sp,s1,s2
+                           .data:004009b8 02 74 f0 20                      add	s8,s3,s4
+                           .data:004009bc 02 b6 08 26                      xor	at,s5,s6
+                           .data:004009c0 02 f8 10 26                      xor	v0,s7,t8
+                           .data:004009c4 03 3a 18 26                      xor	v1,t9,k0
+                           .data:004009c8 03 7c 20 26                      xor	a0,k1,gp
+                           .data:004009cc 03 be 28 26                      xor	a1,sp,s8
+                           .data:004009d0 00 22 30 21                      addu	a2,at,v0
+                           .data:004009d4 00 64 38 21                      addu	a3,v1,a0
+                           .data:004009d8 00 a6 40 20                      add	t0,a1,a2
+                           .data:004009dc 01 07 40 20                      add	t0,t0,a3
+                           .data:004009e0 3c 03 19 13                      lui	v1,0x1913
+                           .data:004009e4 20 63 00 4f                      addi	v1,v1,79
+                           .data:004009e8 11 03 00 08                      beq	t0,v1,0x00400a0c
+                           .data:004009ec 00 00 00 00                      nop
+                           .data:004009f0 20 05 00 00                      addi	a1,zero,0
+                           .data:004009f4 20 01 00 08                      addi	at,zero,8
+                           .data:004009f8 00 a1 28 22                      sub	a1,a1,at
+                           .data:004009fc 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a00 ac 25 00 00                      sw	a1,0(at)
+                           .data:00400a04 08 10 00 6e                      j	0x004001b8
+                           .data:00400a08 00 00 00 00                      nop
+                           .data:00400a0c 03 e0 00 08                      jr	ra
+                           .data:00400a10 00 00 00 00                      nop
+                           .data:00400a14 34 02 12 34                      li	v0,0x1234
+                           .data:00400a18 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a1c 00 20 08 21                      move	at,at
+                           .data:00400a20 ac 22 03 c4                      sw	v0,964(at)
+                           .data:00400a24 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a28 c0 23 03 c4                      ll	v1,964(at)
+                           .data:00400a2c 20 44 00 01                      addi	a0,v0,1
+                           .data:00400a30 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a34 e0 24 03 c4                      sc	a0,964(at)
+                           .data:00400a38 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a3c 8c 25 03 c4                      lw	a1,964(at)
+                           .data:00400a40 20 06 00 01                      addi	a2,zero,1
+                           .data:00400a44 20 07 12 35                      addi	a3,zero,4661
+                           .data:00400a48 14 86 00 05                      bne	a0,a2,0x00400a60
+                           .data:00400a4c 00 00 00 00                      nop
+                           .data:00400a50 14 a7 00 03                      bne	a1,a3,0x00400a60
+                           .data:00400a54 00 00 00 00                      nop
+                           .data:00400a58 08 10 02 9f                      j	0x00400a7c
+                           .data:00400a5c 00 00 00 00                      nop
+                           .data:00400a60 20 05 00 00                      addi	a1,zero,0
+                           .data:00400a64 20 01 00 09                      addi	at,zero,9
+                           .data:00400a68 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400a6c 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a70 ac 25 00 00                      sw	a1,0(at)
+                           .data:00400a74 08 10 00 6e                      j	0x004001b8
+                           .data:00400a78 00 00 00 00                      nop
+                           .data:00400a7c 03 e0 00 08                      jr	ra
+                           .data:00400a80 00 00 00 00                      nop
+                           .data:00400a84 3c 01 10 01                      lui	at,0x1001
+                           .data:00400a88 ac 20 03 d4                      sw	zero,980(at)
+                           .data:00400a8c 20 01 04 01                      addi	at,zero,1025
+                           .data:00400a90 40 81 60 00                      mtc0	at,$12
+                           .data:00400a94 00 00 00 0d                      break
+                           .data:00400a98 00 00 00 00                      nop
+                           .data:00400a9c 3c 01 ff ff                      lui	at,0xffff
+                           .data:00400aa0 34 21 ff ff                      ori	at,at,0xffff
+                           .data:00400aa4 14 2a 00 4d                      bne	at,t2,0x00400bdc
+                           .data:00400aa8 00 00 00 00                      nop
+                           .data:00400aac 00 00 00 0c                      syscall
+                           .data:00400ab0 00 00 00 00                      nop
+                           .data:00400ab4 3c 01 ff ff                      lui	at,0xffff
+                           .data:00400ab8 34 21 ff ff                      ori	at,at,0xffff
+                           .data:00400abc 14 2b 00 47                      bne	at,t3,0x00400bdc
+                           .data:00400ac0 00 00 00 00                      nop
+                           .data:00400ac4 20 01 04 01                      addi	at,zero,1025
+                           .data:00400ac8 40 81 60 00                      mtc0	at,$12
+                           .data:00400acc 20 01 00 01                      addi	at,zero,1
+                           .data:00400ad0 20 02 00 01                      addi	v0,zero,1
+                           .data:00400ad4 00 22 00 34                      teq	at,v0
+                           .data:00400ad8 00 00 00 00                      nop
+                           .data:00400adc 3c 01 ff ff                      lui	at,0xffff
+                           .data:00400ae0 34 21 ff ff                      ori	at,at,0xffff
+                           .data:00400ae4 14 2c 00 3d                      bne	at,t4,0x00400bdc
+                           .data:00400ae8 00 00 00 00                      nop
+                           .data:00400aec 00 0c 00 0a                      0xc000a
+                           .data:00400af0 20 01 00 00                      addi	at,zero,0
+                           .data:00400af4 20 02 00 00                      addi	v0,zero,0
+                           .data:00400af8 20 01 00 01                      addi	at,zero,1
+                           .data:00400afc 00 41 10 22                      sub	v0,v0,at
+                           .data:00400b00 00 22 00 30                      tge	at,v0
+                           .data:00400b04 00 00 00 00                      nop
+                           .data:00400b08 20 01 00 00                      addi	at,zero,0
+                           .data:00400b0c 20 02 00 00                      addi	v0,zero,0
+                           .data:00400b10 20 01 00 01                      addi	at,zero,1
+                           .data:00400b14 00 41 10 22                      sub	v0,v0,at
+                           .data:00400b18 00 41 00 31                      tgeu	v0,at
+                           .data:00400b1c 00 00 00 00                      nop
+                           .data:00400b20 20 01 00 00                      addi	at,zero,0
+                           .data:00400b24 20 02 00 00                      addi	v0,zero,0
+                           .data:00400b28 20 01 00 01                      addi	at,zero,1
+                           .data:00400b2c 00 41 10 22                      sub	v0,v0,at
+                           .data:00400b30 00 41 00 32                      tlt	v0,at
+                           .data:00400b34 00 00 00 00                      nop
+                           .data:00400b38 20 01 00 00                      addi	at,zero,0
+                           .data:00400b3c 20 02 00 00                      addi	v0,zero,0
+                           .data:00400b40 20 01 00 01                      addi	at,zero,1
+                           .data:00400b44 00 41 10 22                      sub	v0,v0,at
+                           .data:00400b48 00 22 00 33                      tltu	at,v0
+                           .data:00400b4c 00 00 00 00                      nop
+                           .data:00400b50 20 01 00 00                      addi	at,zero,0
+                           .data:00400b54 20 02 00 00                      addi	v0,zero,0
+                           .data:00400b58 20 01 00 01                      addi	at,zero,1
+                           .data:00400b5c 00 41 10 22                      sub	v0,v0,at
+                           .data:00400b60 00 22 00 36                      tne	at,v0
+                           .data:00400b64 00 00 00 00                      nop
+                           .data:00400b68 20 01 00 01                      addi	at,zero,1
+                           .data:00400b6c 04 2c 00 01                      teqi	at,1
+                           .data:00400b70 00 00 00 00                      nop
+                           .data:00400b74 20 01 00 00                      addi	at,zero,0
+                           .data:00400b78 20 01 00 01                      addi	at,zero,1
+                           .data:00400b7c 00 21 08 22                      sub	at,at,at
+                           .data:00400b80 04 28 ff fe                      tgei	at,-2
+                           .data:00400b84 00 00 00 00                      nop
+                           .data:00400b88 20 01 00 00                      addi	at,zero,0
+                           .data:00400b8c 20 01 00 01                      addi	at,zero,1
+                           .data:00400b90 00 21 08 22                      sub	at,at,at
+                           .data:00400b94 04 29 00 00                      tgeiu	at,0
+                           .data:00400b98 00 00 00 00                      nop
+                           .data:00400b9c 20 01 00 00                      addi	at,zero,0
+                           .data:00400ba0 20 01 00 01                      addi	at,zero,1
+                           .data:00400ba4 00 21 08 22                      sub	at,at,at
+                           .data:00400ba8 04 2a 00 00                      tlti	at,0
+                           .data:00400bac 00 00 00 00                      nop
+                           .data:00400bb0 20 01 00 00                      addi	at,zero,0
+                           .data:00400bb4 04 2b 00 01                      tltiu	at,1
+                           .data:00400bb8 00 00 00 00                      nop
+                           .data:00400bbc 20 01 00 00                      addi	at,zero,0
+                           .data:00400bc0 04 2e 00 01                      tnei	at,1
+                           .data:00400bc4 00 00 00 00                      nop
+                           .data:00400bc8 3c 01 10 01                      lui	at,0x1001
+                           .data:00400bcc 8c 3a 03 d4                      lw	k0,980(at)
+                           .data:00400bd0 20 03 00 0d                      addi	v1,zero,13
+                           .data:00400bd4 13 43 00 08                      beq	k0,v1,0x00400bf8
+                           .data:00400bd8 00 00 00 00                      nop
+                           .data:00400bdc 20 05 00 00                      addi	a1,zero,0
+                           .data:00400be0 20 01 00 0a                      addi	at,zero,10
+                           .data:00400be4 00 a1 28 22                      sub	a1,a1,at
+                           .data:00400be8 3c 01 10 01                      lui	at,0x1001
+                           .data:00400bec ac 25 00 00                      sw	a1,0(at)
+                           .data:00400bf0 08 10 00 6e                      j	0x004001b8
+                           .data:00400bf4 00 00 00 00                      nop
+                           .data:00400bf8 03 e0 00 08                      jr	ra
+                           .data:00400bfc 00 00 00 00                      nop
+                           .data:00400c00 20 01 04 01                      addi	at,zero,1025
+                           .data:00400c04 40 81 60 00                      mtc0	at,$12
+                           .data:00400c08 40 01 48 00                      mfc0	at,$9
+                           .data:00400c0c 20 21 01 00                      addi	at,at,256
+                           .data:00400c10 40 81 58 00                      mtc0	at,$11
+                           .data:00400c14 03 e0 00 08                      jr	ra
+                           .data:00400c18 00 00 00 00                      nop

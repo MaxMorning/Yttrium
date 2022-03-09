@@ -9,6 +9,8 @@ module soc_tb ();
     wire[31:0] inst;
     wire[31:0] pc;
 
+    wire[31:0] ANSCODE;
+
     integer fout;
     integer check_loop;
     integer i;
@@ -22,6 +24,7 @@ module soc_tb ();
 
     assign pc = mother_board.core0.MEM_current_pc;
     assign inst = mother_board.core0.MEM_current_instr;
+    assign ANSCODE = mother_board.dmem_inst.data_array[0];
 
     initial begin
         clk = 0;
@@ -43,7 +46,7 @@ module soc_tb ();
         reset = 0;
 
         #49;
-        for (check_loop = 0; check_loop < 2048; check_loop = check_loop + 1) begin
+        for (check_loop = 0; check_loop < 8192; check_loop = check_loop + 1) begin
             $fdisplay(fout, "pc: %h", pc);
             $fdisplay(fout, "instr: %h", inst);
 
