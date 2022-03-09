@@ -42,8 +42,6 @@ module CP0 (
 
     reg[31:0] reg_file[31:0];
 
-    assign o_rdata = reg_file[i_raddr];
-
     assign o_count_reg = reg_file[`CP0_REG_COUNT];
     assign o_compare_reg = reg_file[`CP0_REG_COMPARE];
     assign o_status_reg = reg_file[`CP0_REG_STATUS];

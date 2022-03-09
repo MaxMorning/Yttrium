@@ -334,7 +334,7 @@ module ID_EXE_reg (
         
         .i_we(i_ena),
 
-        .i_data(i_ID_bad_addr ? (i_ID_dmem_we ? EXC_CAUSE_ADES : EXC_CAUSE_ADEL) : i_ID_except_cause),
+        .i_data(i_ID_bad_addr ? (i_ID_dmem_we ? `EXC_CAUSE_ADES : `EXC_CAUSE_ADEL) : i_ID_except_cause),
         .o_data(o_EXE_except_cause)
     );
     
