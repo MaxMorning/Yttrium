@@ -150,26 +150,6 @@ module EXE_MEM_reg (
         .o_data(o_MEM_ALU_result)
     );
 
-    RegWithWE #(32) mult_lo_reg(
-        .clk(clk),
-        .resetn(resetn),
-
-        .i_we(i_ena),
-
-        .i_data(i_EXE_Mult_lo),
-        .o_data(o_MEM_Mult_lo)
-    );
-
-    RegWithWE #(32) mult_hi_reg(
-        .clk(clk),
-        .resetn(resetn),
-
-        .i_we(i_ena),
-
-        .i_data(i_EXE_Mult_hi),
-        .o_data(o_MEM_Mult_hi)
-    );
-
     RegWithWE #(32) div_q_reg(
         .clk(clk),
         .resetn(resetn),

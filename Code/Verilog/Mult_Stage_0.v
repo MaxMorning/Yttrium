@@ -45,7 +45,7 @@ module Mult_Stage_0 (
         begin : lv3
             assign wire_lv3[i] = {{{1'b0, wire_lv2[2 * i + 1]} + {5'b00000, wire_lv2[2 * i][36:4]}}, wire_lv2[2 * i][3:0]};
 
-            assign stage_0_result[64 * i + 63 -: 64] = wire_lv3[i];
+            assign stage_0_result[42 * i + 41 -: 42] = wire_lv3[i];
         end
     endgenerate
 

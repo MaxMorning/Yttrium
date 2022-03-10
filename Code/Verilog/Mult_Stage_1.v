@@ -13,6 +13,7 @@ module Mult_Stage_1 (
     wire [63:0] wire_lv5;
 
     generate
+        genvar i;
         for (i = 0; i < 4; i = i + 1)
         begin : lv3
             assign wire_lv3[i] = stage_0_result[42 * i + 41 -: 42];
