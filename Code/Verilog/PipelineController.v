@@ -35,12 +35,12 @@ module PipelineController (
     //     end
     // end
 
-    always @(posedge clk or posedge i_MEM_answer_exc) begin
+    always @(posedge clk) begin
         if (!resetn) begin
             control_regs <= 4'b1000;
         end
         else if (i_MEM_answer_exc) begin
-            control_regs <= 4'b0001;
+            control_regs <= 4'b1011;
         end
         else if (~i_div_busy) begin
             control_regs[3] <= 1;

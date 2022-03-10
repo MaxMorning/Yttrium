@@ -18,7 +18,8 @@ module NextPCSel (
     always @(*) begin
         if (i_answer_exc) begin
             case (i_MEM_exception_cause)
-                `EXC_CAUSE_INT:
+                `EXC_CAUSE_INT,
+                `EXC_CAUSE_NOP:
                     o_IF_next_pc <= `INT_PROC_ENTRY;
 
                 `EXC_CAUSE_ADEL,

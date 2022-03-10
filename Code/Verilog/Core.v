@@ -222,7 +222,7 @@ module Core (
         .i_div_busy(EXE_Div_busy),
 
         .i_ID_data_related_confict(ID_data_related_confict),
-        .i_MEM_answer_exc(MEM_CP0_answer_exc),
+        .i_MEM_answer_exc(MEM_CP0_answer_exc | MEM_is_eret),
 
         .o_IF_ID_ena(IF_ID_ena),
         .o_ID_EXE_ena(ID_EXE_ena),
@@ -528,7 +528,7 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_ena(EXE_MEM_ena),
+        .i_ena(EXE_MEM_ena & ~MEM_CP0_answer_exc),
 
         .i_EXE_current_pc(EXE_current_pc),
         .i_EXE_current_instr(EXE_current_instr),

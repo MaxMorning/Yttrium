@@ -95,6 +95,7 @@
 `define FUNC_TNE    6'b110110
 
 `define FUNC_SYSCALL 6'b001100
+`define FUNC_BREAK   6'b001101
 
 // branch link op
 `define RT_BGEZ     5'b00001

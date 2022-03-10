@@ -859,6 +859,30 @@ module Decoder (
                         o_except_cause <= `EXC_CAUSE_SYS;
                     end
 
+                    // `FUNC_BREAK:
+                    // begin
+                    //     o_get_result_in_EXE <= 0;
+                    //     o_get_result_in_MEM <= 0;
+
+                    //     o_ALU_opr1 <= 32'hX;
+                    //     o_ALU_opr2 <= 32'hX;
+                    //     o_ALU_op <= `ALU_NOP;
+
+                    //     o_GPR_waddr <= 5'hX;
+                    //     o_gpr_we <= 0;
+                    //     o_GPR_wdata_selection <= 3'hX;
+
+                    //     o_hi_we <= 0;
+                    //     o_lo_we <= 0;
+
+                    //     o_LoHi_wdata_selection <= 2'bxx;
+
+                    //     o_mem_we <= 0;
+
+                    //     o_is_trap <= 0;
+                    //     o_except_cause <= `EXC_CAUSE_BP;
+                    // end
+
                     `FUNC_SYNC:
                     begin
                         o_get_result_in_EXE <= 0;
