@@ -595,8 +595,8 @@ module Decoder (
                     `FUNC_MULT,
                     `FUNC_MULTU:
                     begin
-                        o_get_result_in_EXE <= 0;
-                        o_get_result_in_MEM <= 1;
+                        o_get_result_in_EXE <= 1;
+                        o_get_result_in_MEM <= 0;
 
                         o_ALU_opr1 <= i_rs_rdata;
                         o_ALU_opr2 <= i_rt_rdata;

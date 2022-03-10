@@ -16,9 +16,6 @@ module EXE_MEM_reg (
     input wire[31:0] i_EXE_GPR_rdata1,
     input wire[31:0] i_EXE_ALU_result,
 
-    input wire[31:0] i_EXE_Mult_lo,
-    input wire[31:0] i_EXE_Mult_hi,
-
     input wire[31:0] i_EXE_Div_quotient,
     input wire[31:0] i_EXE_Div_remainder,
 
@@ -44,6 +41,8 @@ module EXE_MEM_reg (
     input wire[4:0] i_EXE_except_cause,
     input wire i_EXE_ALU_overflow,
 
+    input wire[4 * 42 - 1 : 0] i_EXE_mult_stage_0_result,
+    input wire i_EXE_mult_result_need_process,
 
 
 
@@ -56,9 +55,6 @@ module EXE_MEM_reg (
 
     output wire[31:0] o_MEM_GPR_rdata1,
     output wire[31:0] o_MEM_ALU_result,
-
-    output wire[31:0] o_MEM_Mult_lo,
-    output wire[31:0] o_MEM_Mult_hi,
 
     output wire[31:0] o_MEM_Div_quotient,
     output wire[31:0] o_MEM_Div_remainder,
@@ -78,7 +74,10 @@ module EXE_MEM_reg (
     output wire o_MEM_is_eret,
 
     output wire o_MEM_LL_bit_value,
-    output wire[31:0] o_MEM_proc_dmem_rdata
+    output wire[31:0] o_MEM_proc_dmem_rdata,
+
+    output wire[4 * 42 - 1 : 0] o_MEM_mult_stage_0_result,
+    output wire o_MEM_mult_result_need_process
 );
 
     RegWithWE #(32) current_pc_reg(
@@ -302,4 +301,23 @@ module EXE_MEM_reg (
         .o_data(o_MEM_CP0_except_cause)
     );
     
+    RegWithWE #(4 * 42) mult_stage_0_reg(
+        .clk(clk),
+        .resetn(resetn),
+
+        .i_we(i_ena),
+
+        .i_data(i_EXE_mult_stage_0_result),
+        .o_data(o_MEM_mult_stage_0_result)
+    );
+
+    RegWithWE #(1) mult_result_need_process_reg(
+        .clk(clk),
+        .resetn(resetn),
+
+        .i_we(i_ena),
+
+        .i_data(i_EXE_mult_result_need_process),
+        .o_data(o_MEM_mult_result_need_process)
+    );
 endmodule

@@ -109,8 +109,9 @@ module Core (
 
 
     wire EXE_MultDiv_is_unsigned;
-    wire[31:0] EXE_Mult_hi_result;
-    wire[31:0] EXE_Mult_lo_result;
+    wire EXE_mult_result_need_process;
+
+    wire [42 * 4 - 1 : 0] EXE_mult_stage_0_result;
 
     wire EXE_is_div;
     wire[31:0] EXE_Div_quotient;
@@ -156,6 +157,8 @@ module Core (
 
     wire[31:0] MEM_ALU_result;
 
+    wire MEM_mult_result_need_process;
+    wire[42 * 4 - 1 : 0] MEM_mult_stage_0_result;
     wire[31:0] MEM_Mult_lo;
     wire[31:0] MEM_Mult_hi;
 
@@ -473,14 +476,14 @@ module Core (
         .o_no_write_override(EXE_ALU_no_write_override)
     );
 
-    Mult mult_inst(
+    Mult_Stage_0 mult_stage_0_inst(
         .i_opr1(EXE_ALU_opr1),
         .i_opr2(EXE_ALU_opr2),
 
         .is_unsigned(EXE_MultDiv_is_unsigned),
 
-        .o_hi_result(EXE_Mult_hi_result),
-        .o_lo_result(EXE_Mult_lo_result)
+        .result_need_process(EXE_mult_result_need_process),
+        .stage_0_result(EXE_mult_stage_0_result)
     );
 
     Divider div_inst(
@@ -501,7 +504,7 @@ module Core (
         .i_GPR_wdata_sel(EXE_GPR_wdata_selection),
 
         .i_alu_result(EXE_ALU_result),
-        .i_mul_result(EXE_Mult_lo_result),
+        .i_mul_result(32'hZ),
         .i_llbit_result({31'h0, EXE_LL_bit_value}),
         .i_cp0_result(32'hZ),
         .i_lo_reg_result(32'hZ),
@@ -539,9 +542,6 @@ module Core (
 
         .i_EXE_GPR_rdata1(EXE_GPR_rdata1),
         .i_EXE_ALU_result(EXE_ALU_result),
-        
-        .i_EXE_Mult_lo(EXE_Mult_lo_result),
-        .i_EXE_Mult_hi(EXE_Mult_hi_result),
 
         .i_EXE_Div_quotient(EXE_Div_quotient),
         .i_EXE_Div_remainder(EXE_Div_remainder),
@@ -567,6 +567,9 @@ module Core (
         .i_EXE_except_cause(EXE_except_cause),
         .i_EXE_ALU_overflow(EXE_ALU_overflow),
 
+        .i_EXE_mult_stage_0_result(EXE_mult_stage_0_result),
+        .i_EXE_mult_result_need_process(EXE_mult_result_need_process),
+
         .o_MEM_current_pc(MEM_current_pc),
         .o_MEM_current_instr(MEM_current_instr),
 
@@ -576,9 +579,6 @@ module Core (
 
         .o_MEM_GPR_rdata1(MEM_GPR_rdata1),
         .o_MEM_ALU_result(MEM_ALU_result),
-
-        .o_MEM_Mult_lo(MEM_Mult_lo),
-        .o_MEM_Mult_hi(MEM_Mult_hi),
 
         .o_MEM_Div_quotient(MEM_Div_quotient),
         .o_MEM_Div_remainder(MEM_Div_remainder),
@@ -598,7 +598,18 @@ module Core (
         .o_MEM_is_eret(MEM_is_eret),
 
         .o_MEM_LL_bit_value(MEM_LL_bit_value),
-        .o_MEM_proc_dmem_rdata(MEM_proc_dmem_rdata)
+        .o_MEM_proc_dmem_rdata(MEM_proc_dmem_rdata),
+        
+        .o_MEM_mult_stage_0_result(MEM_mult_stage_0_result),
+        .o_MEM_mult_result_need_process(MEM_mult_result_need_process)
+    );
+
+    Mult_Stage_1 mult_stage_1_inst(
+        .stage_0_result(MEM_mult_stage_0_result),
+        .result_need_process(MEM_mult_result_need_process),
+
+        .o_hi_result(MEM_Mult_hi),
+        .o_lo_result(MEM_Mult_lo)
     );
 
     MCalc m_calc_inst(
