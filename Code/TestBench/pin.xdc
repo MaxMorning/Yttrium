@@ -39,5 +39,5 @@ set_property IOSTANDARD LVCMOS33 [get_ports reset]
 set_property PACKAGE_PIN E3 [get_ports base_clk]
 set_property PACKAGE_PIN N17 [get_ports reset]
 
-# create_clock -period 10.000 -name clk_pin -waveform {0.000 5.000} [get_ports base_clk]
+create_clock -period 10.000 -name clk_pin -waveform {0.000 5.000} [get_ports base_clk]
 

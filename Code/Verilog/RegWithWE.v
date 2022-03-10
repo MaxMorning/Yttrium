@@ -13,7 +13,7 @@ module RegWithWE #(
 );
     reg[LENGTH - 1 : 0] data_reg;
 
-    assign o_data = ENABLE_OVERRIDE ? ({LENGTH{i_we}} & data_reg) : data_reg;
+    assign o_data = (ENABLE_OVERRIDE & ~i_we) ? INIT_VALUE : data_reg;
 
     always @(posedge clk or negedge resetn) begin
         if (!resetn) begin

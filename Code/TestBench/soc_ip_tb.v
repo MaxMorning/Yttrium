@@ -15,11 +15,9 @@ module soc_tb ();
     integer check_loop;
     integer i;
 
-    MotherBoard mother_board(
+    SoC mother_board(
         .clk(clk),
-        .reset(reset),
-
-        .i_interruption(interruption)
+        .reset(reset)
     );
 
     assign pc = mother_board.core0.MEM_current_pc;

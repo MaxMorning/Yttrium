@@ -24,9 +24,9 @@ module GPRByPass (
         if (i_EXE_we && i_EXE_get_result_in_EXE && i_EXE_waddr != 0 && i_EXE_waddr == i_ID_raddr1) begin
             o_ID_valid_rdata1 <= i_EXE_wdata;
         end
-        else if (i_MEM_we && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr1) begin
-            o_ID_valid_rdata1 <= i_MEM_wdata;
-        end
+        // else if (i_MEM_we && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr1) begin
+        //     o_ID_valid_rdata1 <= i_MEM_wdata;
+        // end
         else begin
             o_ID_valid_rdata1 <= i_ID_rdata1;
         end
@@ -36,9 +36,9 @@ module GPRByPass (
         if (i_EXE_we && i_EXE_get_result_in_EXE && i_EXE_waddr != 0 && i_EXE_waddr == i_ID_raddr2) begin
             o_ID_valid_rdata2 <= i_EXE_wdata;
         end
-        else if (i_MEM_we && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr2) begin
-            o_ID_valid_rdata2 <= i_MEM_wdata;
-        end
+        // else if (i_MEM_we && i_MEM_waddr != 0 && i_MEM_waddr == i_ID_raddr2) begin
+        //     o_ID_valid_rdata2 <= i_MEM_wdata;
+        // end
         else begin
             o_ID_valid_rdata2 <= i_ID_rdata2;
         end

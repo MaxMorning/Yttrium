@@ -328,11 +328,11 @@ module Core (
         .clk(clk),
         .resetn(resetn),
 
-        .i_we(WB_GPR_we),
+        .i_we(MEM_GPR_we),
         .i_raddr1(ID_current_instr[25:21]),
         .i_raddr2(ID_current_instr[20:16]),
-        .i_waddr(WB_GPR_waddr),
-        .i_wdata(WB_GPR_wdata),
+        .i_waddr(MEM_GPR_waddr),
+        .i_wdata(MEM_GPR_wdata),
 
         .o_rdata1(ID_GPR_rdata1),
         .o_rdata2(ID_GPR_rdata2)
