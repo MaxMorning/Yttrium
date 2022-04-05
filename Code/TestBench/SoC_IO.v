@@ -20,6 +20,8 @@ module SoC (
     wire[3:0] core_DMEM_sel;
 
     wire[31:0] ANSCODE;
+
+    wire[4:0] i_interruption = 5'b0;
     
     Core core0(
         .clk(clk),

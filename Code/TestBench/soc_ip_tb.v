@@ -16,13 +16,13 @@ module soc_tb ();
     integer i;
 
     SoC mother_board(
-        .clk(clk),
+        .base_clk(clk),
         .reset(reset)
     );
 
-    assign pc = mother_board.core0.MEM_current_pc;
-    assign inst = mother_board.core0.MEM_current_instr;
-    assign ANSCODE = mother_board.dmem_inst.ANSCODE_reg;
+    assign pc = mother_board.core_IMEM_raddr;
+    assign inst = mother_board.IMEM_core_rdata;
+    assign ANSCODE = mother_board.ANSCODE;
 
     initial begin
         clk = 0;
@@ -37,14 +37,15 @@ module soc_tb ();
 
         // $readmemh("./MIPS/WORKSPACE/instr.txt", mother_board.imem_inst.inst_array);
         // $readmemh("./MIPS/DMEM.txt", mother_board.dmem_inst.data_array);
-        fout = $fopen("./MIPS/WORKSPACE/result.txt", "w+");
+        fout = $fopen("result.txt", "w+");
         reset = 1;
         interruption = 0;
+        
         #7
         reset = 0;
 
         #49;
-        for (check_loop = 0; check_loop < 512; check_loop = check_loop + 1) begin
+        for (check_loop = 0; check_loop < 4096; check_loop = check_loop + 1) begin
             $fdisplay(fout, "pc: %h", pc);
             $fdisplay(fout, "instr: %h", inst);
 
@@ -56,6 +57,6 @@ module soc_tb ();
 
         $fclose(fout);
 
-        // $finish;
+//         $finish;
     end
 endmodule
