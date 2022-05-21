@@ -9,3 +9,5 @@ Code/MIPS/DMEM.txt
 *.ini
 
 Code/work
+Code/simulate.sml
+.DS_Store
